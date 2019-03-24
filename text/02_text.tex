@@ -188,7 +188,7 @@ Porovnanie týchto dvoch metód je na obrázku \ref{pic-ferns&forests}.
 Podľa článku navrhnutá metóda používa pohľad na tvár spredu a je použiteľná v reálnom čase (30 fps), kvôli rýchlosti výpočtu Random Forest.\\
 
 V článku \cite{joosten2015voice} popisujú a testujú metódu VVAD založenú na Spatiotemporal Gabor filters, ktorá podľa autorov nebola nikdy predtým na VVAD použitá.
-Používajú 2 datasety: CUAVE - obsahuje nahrávky reči pri pohľade spredu aj z profilu a LIVER - obsahuje nahrávky vyslovovania holandského slova "liver" pri pohľade spredu.
+Používajú dva datasety: CUAVE - obsahuje nahrávky reči pri pohľade spredu aj z profilu a LIVER - obsahuje nahrávky vyslovovania holandského slova "liver" pri pohľade spredu.
 Ich metóda sa skladá z 2 fáz: 
 \begin{itemize}
 	\item fáza predspracovania - aplikovanie Spatiotemporal Gabor filters na zistenie energií v konkrétnych rýchlostiach (jeden z parametrov Spatiotemporal Gabor filters),
@@ -356,7 +356,7 @@ Nevýhody:
 \begin{itemize}
 	\item žiadne, až na tú, že nasledujúca metóda je rýchlejšia.\\
 \end{itemize}
-Detekcia tváre pomocou \textbf{HoG} je široko používaný model v knižnici Dlib založený na Hog a SVM.
+Detekcia tváre pomocou \textbf{HoG} je široko používaný model v knižnici Dlib založený na Hog a SVM.\\
 Výhody:
 \begin{itemize}
 	\item najrýchlejšia zo štyroch uvedených metód na CPU,
@@ -371,7 +371,7 @@ Nevýhody:
 	\item nefunguje dobre pri značnom zakrytí tváre,
 	\item nefunguje pre pohľad zboka a pre pohľad hore a dole.\\
 \end{itemize}
-Detekcia tváre pomocou \textbf{CNN} v knižnici Dlib používa Maximum-Margin Object Detector s CNN.
+Detekcia tváre pomocou \textbf{CNN} v knižnici Dlib používa Maximum-Margin Object Detector s CNN.\\
 Výhody:
 \begin{itemize}
 	\item funguje pre rôzne orientácie tváre,
@@ -419,7 +419,7 @@ Ukážka vypočítaných vlastností na zvukovom súbore pomocou algoritmu z \ci
 	\end{center}
 \end{figure}
 
-\section{VAD spojením AVAD a VVAD a Vytvorenie knižnice}
+\section{VAD spojením AVAD a VVAD a vytvorenie knižnice}
 Výstupom tejto diplomovej práce by mal program schopný zistiť, či používateľ počas videohovoru rozpráva alebo nerozpráva. 
 Na to chceme použi kombináciu metód VVAD a AVAD. 
 Kombinácia metód je dôležitá v rôznych prípadoch. 
@@ -451,17 +451,26 @@ Ako vývojárske prostredie bol zvolený CLion a buildovali sme pomocou Cmake.
 
 \section{Implementácia VVAD}
 
+\subsection{Detekcia tváre pomocou knižnice Dlib}
+
+
 \subsection{Vytvorenie modelu pre detekciu bodov na tvári}
 Pre detekciu bodov na tvári budeme potrebovať natrénovaný model. 
 V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely, ktoré detegujú 68 alebo 5 bodov na tvári. 
 Model so 68 bodmi má približne 95MiB, čo je príliš veľa a model s 5 bodmi zas neobsahuje body na perách.
 Rozhodli sme sa teda vytvoriť vlastný model, ktorý by mal menšiu veľkosť a bol dostatočne presný pre naše potreby.
 Pre trénovanie modelu budeme potrebovať fotografie osôb a k nim súbor formátu xml, v ktorom budú uložené polohy jednotlivých bodov na tvárach ľudí na fotografiách.
-V príkladových súboroch sa nachádzajú fotografie aj xml súbory použité na trénovanie a testovanie modelu so 68 bodmi na tvári.
-Na trénovanie boli použité 4 fotografie s celkovo 18 tvárami.
-Na testovanie bolo použitých 5 fotografií s celkovo 25 tvárami.
+V príkladových súboroch sa nachádzajú fotografie aj xml súbory pomocou ktorých je možné trénovať model.
+Na trénovanie sú určené 4 fotografie s celkovo 18 tvárami.
+Na testovanie je určených 5 fotografií s celkovo 25 tvárami.
+Pomocou uvedených súborov však nie je možné natrénovať dostatočne presný model.
+Zo stránky \cite{ibug} sme získali dataset 300-W (pri použití daného datasetu žiadajú na stránke citovať \cite{sagonas2016300}, \cite{sagonas2013300} a \cite{sagonas2013semi}) obsahujúci fotografie z datasetov afw, helen, ibug a lfpw. 
+Dataset samozrejme obsahoval aj testovaci a trénovací xml súbor s označenými umiestneniami 68 bodov na tvári, pomocou ktorých je možné natrénovať presnejší model.
+Trénovací súbor obsahoval 6666 tvári a testovací obsahoval 1008 tvári.
 Knižnica Dlib obsahuje nástroj na vytváranie a úpravu xml súborov s informáciami o bodoch na tvárach na fotografiách a aj nástroj na trénovanie a testovanie modelu na základe fotografií a xml súborov.
-Nástroj na trénovanie má možnosť nastaviť parametre trénovanie, ako je napríklad hĺbka stromu a. i. (POPIŠ VIAC)
+Pomocou nástroja na prácu s xml súbormi z knižnice Dlib a editora Sublime Text sme upravili počet bodov na tvári v xml súboroch.
+...
+Nástroj na trénovanie má možnosť nastaviť parametre trénovania, ako je napríklad hĺbka stromu a. i. (POPIŠ VIAC)
 Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
 \begin{itemize}
 	\item 20 bodový model pier. 

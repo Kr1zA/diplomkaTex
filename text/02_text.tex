@@ -321,6 +321,9 @@ Ukážka detekcie bodov na tvári pomocou knižnice Dlib je na obrázku \ref{pic
 \end{figure}
 
 \subsection{Porovnanie knižní OpenCV a Dlib} \label{OpenCVvsDlibNadpis}
+V oboch knižniciach je implementovaná detekcia bodov na tvári z článku \cite{kazemi2014one}.
+Ako problém ostáva nájdenie tváre v obraze.
+Obe knižnice ponúkajú viacero metód, ktoré tento problém riešia.
 Na stránke \cite{OpenCVvsDlib} porovnávajú metódy detekcie tváre v knižniciach OpenCV a Dlib. 
 Zameriavajú sa na 4 nasledujúce metódy:
 \begin{itemize}
@@ -356,7 +359,7 @@ Nevýhody:
 \begin{itemize}
 	\item žiadne, až na tú, že nasledujúca metóda je rýchlejšia.\\
 \end{itemize}
-Detekcia tváre pomocou \textbf{HoG} je široko používaný model v knižnici Dlib založený na Hog a SVM.\\
+Detekcia tváre pomocou \textbf{HoG} je široko používaný model v knižnici Dlib založený na HoG a SVM.\\
 Výhody:
 \begin{itemize}
 	\item najrýchlejšia zo štyroch uvedených metód na CPU,
@@ -439,22 +442,42 @@ Takýmto spôsobom môže byť využitie knižnice väčšie.
 Napríklad v prípade nedetegovania tváre sa môže znížiť kvalita prenášaného obrazu pri videohovore, čím sa zníži záťaž procesora aj sieťovej linky.
 
 \chapter{Implementácia a testovanie}
-
 V tejto kapitole popíšeme implementáciu nami navrhnutého riešenia VAD v C++ knižnici.
 
 \section{Použitý hardware a software}
 Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM). 
-Pre testovanie sme používali webovú kameru (neviem model z hlavy... DOPLNIŤ).
+Pre testovanie sme používali webovú kameru LifeCam Cinema.
 Vyvíjali sme jazyku C++, ktorý je najvhodnejší pre prácu s videom.
-Používali sme knižnice OpenCV, Dlib, SFML( a tu ešte niečo pribudne).
+Používali sme knižnice OpenCV, Dlib, SFML.
 Ako vývojárske prostredie bol zvolený CLion a buildovali sme pomocou Cmake.
 
 \section{Implementácia VVAD}
+Vytvorili sme dynamickú knižnicu s názvom VVAD. 
+V hlavičkovom súbore \texttt{VVAD.h} sa nachádzajú definície tried, metód a premenných definovaných v súbore \texttt{VVAD.cpp}.
+V hlavičkovom súbore sú definované 2 triedy: \texttt{VVAD} a  \texttt{Output}.
+Trieda \texttt{VVAD} je hlavnou triedou, ktorá obsahuje verejne metódy:
+\begin{itemize}
+\item \texttt{Frame} - hlavná metóda, ktorej vstupom je video snímok a výstupom je objekt triedy \texttt{Output}.
+\item \texttt{FrameForLearningThreshold} - metóda sa volá na začiatku používania knižnice na určenie prahu. Vstupom metódy je video snímok a výsledným výstupom je prah, pomocou ktorého metóda \texttt{Frame} vyhodnocuje, či vo videosekvencii nasala reč alebo nie.
+\item \texttt{SaveThreshodToFile} - metóda uloží prah do súboru určeného reťazcom, ktorý dostane na vstup.
+\item \texttt{LoadThresholdFromFile} -  metóda načíta prah zo súboru určeného reťazcom, ktorý dostane na vstup.
+\item \texttt{getThreshold} - vráti hodnotu prahu.
+\item \texttt{setThreshold} - nastaví hodnotu prahu.
+\item \texttt{isCalibrated} - vráti pravdivostnú hodnotu, ktorá hovorí, či prah bol nastavený.
+\item \texttt{getCalibrated} - nastaví pravdivostnú hodnotu, ktorá hovorí, či prah bol nastavený.
+\end{itemize}
 
-\subsection{Detekcia tváre pomocou knižnice Dlib}
+V nasledujúcej časti popíšeme fungovanie niektorých metód detailne.
 
+\subsection{Metóda \texttt{Frame}}
 
-\subsection{Vytvorenie modelu pre detekciu bodov na tvári}
+\subsubsection{Detekcia tváre pomocou knižnice Dlib}
+Ako sme popísali v časti \ref{OpenCVvsDlibNadpis}, na detekciu tváre sme použili knižnicu Dlib, konkrétne detekciu tváre pomocou HoG. 
+Táto detekcia je najpomalšia čast celého algoritmu, no aj napriek tomu funguje dostatočne rýchlo na oboch počítačoch, ktoré sme pri implementácií používali.
+Dôvodom je to, že predtým
+Tvár sa po nájdení v obraze posiela na 
+
+\subsubsection{Vytvorenie modelu pre detekciu bodov na tvári}
 Pre detekciu bodov na tvári budeme potrebovať natrénovaný model. 
 V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely, ktoré detegujú 68 alebo 5 bodov na tvári. 
 Model so 68 bodmi má približne 95MiB, čo je príliš veľa a model s 5 bodmi zas neobsahuje body na perách.

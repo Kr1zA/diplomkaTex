@@ -187,11 +187,11 @@ Porovnanie týchto dvoch metód je na obrázku \ref{pic-ferns&forests}.
 
 Podľa článku navrhnutá metóda používa pohľad na tvár spredu a je použiteľná v reálnom čase (30 fps), kvôli rýchlosti výpočtu Random Forest.\\
 
-V článku \cite{joosten2015voice} popisujú a testujú metódu VVAD založenú na Spatiotemporal Gabor filters, ktorá podľa autorov nebola nikdy predtým na VVAD použitá.
+V článku \cite{joosten2015voice} popisujú a testujú metódu VVAD založenú na časopriestorových Gáborových filtroch (angl. Spatiotemporal Gabor filters), ktorá podľa autorov nebola nikdy predtým na VVAD použitá.
 Používajú dve dátové sady: CUAVE - obsahuje nahrávky reči pri pohľade spredu aj z profilu a LIVER - obsahuje nahrávky vyslovovania holandského slova "liver" pri pohľade spredu.
 Ich metóda sa skladá z 2 fáz: 
 \begin{itemize}
-	\item fáza predspracovania - aplikovanie Spatiotemporal Gabor filters na zistenie energií v konkrétnych rýchlostiach (jeden z parametrov Spatiotemporal Gabor filters),
+	\item fáza predspracovania - aplikovanie časopriestorových Gáborových filtrov na zistenie energií v konkrétnych rýchlostiach (jeden z parametrov časopriestorových Gáborových filtrov),
 	\item agregačná a klasifikačná fáza vytvárajúca sumáciu a klasifikátor, na priradzovanie agregovaných energetických hodnôt do binárnych tried (SPEECH a NON-SPEECH).
 \end{itemize}
 Nimi navrhnutú metódu porovnávajú s 2 referenčnými metódami - metódou založenou na rozdieloch snímok a metódou založenou na štandardných Gabor filters. 
@@ -202,7 +202,7 @@ Niektoré porovnania je možné vidieť na obrázku \ref{pic-joosten2015voice}.
 	\begin{center}
 		\includegraphics[height=6.5cm]{pics/cuaveFrontal.png}
 		\includegraphics[height=6.5cm]{pics/liver.png}
-		\caption{Porovnanie referenčných metód založených na rozdieloch snímok (FD*) a štandardných Gabor filters (0*) s metódou založenou na Spatiotemporal Gabor filters s rôznymi parametrami rýchlosti (0,5*, 1*, 1,5*, 2*, 2,5*, 3*, All*).
+		\caption{Porovnanie referenčných metód založených na rozdieloch snímok (FD*) a štandardných Gabor filters (0*) s metódou založenou na časopriestorových Gáborových filtroch s rôznymi parametrami rýchlosti (0,5*, 1*, 1,5*, 2*, 2,5*, 3*, All*).
 		 \cite{joosten2015voice}}
 		\label{pic-joosten2015voice}
 	\end{center}
@@ -445,7 +445,7 @@ Napríklad v prípade nedetegovania tváre sa môže znížiť kvalita prenáša
 V tejto kapitole popíšeme implementáciu nami navrhnutého riešenia VAD v C++ knižnici.
 
 \section{Použitý hardware a software}
-Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM) a na počítači HP.... 
+Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM) a na počítači HP Z240 ( Intel Xeon E3-1245, 16GB ram)
 Pre testovanie sme používali webovú kameru LifeCam Cinema.
 Vyvíjali sme jazyku C++, ktorý je najvhodnejší pre prácu s videom.
 Používali sme knižnice OpenCV, Dlib, SFML.
@@ -508,7 +508,7 @@ Pre detekciu bodov na tvári budeme potrebovať natrénovaný model.
 V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely, ktoré detegujú 68 alebo 5 bodov na tvári. 
 Model so 68 bodmi má približne 95MiB, čo je príliš veľa a model s 5 bodmi zas neobsahuje body na perách.
 Rozhodli sme sa teda vytvoriť vlastný model, ktorý by mal menšiu veľkosť a bol dostatočne presný pre naše potreby.
-Pre trénovanie modelu budeme potrebovať fotografie osôb a k nim súbor s popisom umiestnenia bodov na tvárach (súbory sú štandardne formátu xml, budeme ich aj preto skrátene nazývať xml súbory).
+Pre trénovanie modelu budeme potrebovať fotografie osôb a k nim súbor s popisom umiestnenia bodov na tvárach (súbory sú štandardne formátu xml, budeme ich preto skrátene nazývať xml súbory).
 V príkladových súboroch sa nachádzajú fotografie aj xml súbory pomocou ktorých je možné trénovať model.
 Na trénovanie sú určené 4 fotografie s celkovo 18 tvárami.
 Na testovanie je určených 5 fotografií s celkovo 25 tvárami.
@@ -519,13 +519,11 @@ Dátová sada samozrejme obsahovala aj testovaci a trénovací xml súbor s ozna
 Trénovací súbor obsahoval 6666 tvári a testovací obsahoval 1008 tvári.
 Knižnica Dlib obsahuje nástroj na vytváranie a úpravu xml súborov s informáciami o bodoch na tvárach na fotografiách a aj nástroj na trénovanie a testovanie modelu na základe fotografií a xml súborov.
 Pomocou nástroja na prácu s xml súbormi z knižnice Dlib a editora Sublime Text sme upravili počet bodov na tvári v xml súboroch.
-...
 Nástroj na trénovanie má možnosť nastaviť parametre trénovania, ako je napríklad hĺbka stromu a. i. (POPIŠ VIAC)
 Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
 \begin{itemize}
 	\item 20 bodový model pier. 
 	Ponechali sme len body na perách. 
-	Výsledný model mal menej ako 5MiB.
 	Model ale nebol dostatočne presný.
 	\item 27 bodový model pier.
 	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
@@ -533,7 +531,7 @@ Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstr�
 \end{itemize}
 
 Keďže sa nám zatiaľ nepodarilo vytvoriť vhodnejší model používali sme 68 bodový model.
-(Musím viac pochopiť článok aj implementáciu a potom skúsim vytvoriť lepší model)
+(Stale sa snazim vytvorit lepsi model)
 Ukážka detekcie modelu so 68 bodmi v obraze z webovej kamery je na obrázku \ref{pic-detekciaKsicht}.
 
 \begin{figure}[H]

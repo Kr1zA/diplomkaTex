@@ -547,29 +547,45 @@ Vytvorí sa objekt triedy \texttt{shape\_predictor} z knižnice Dlib, ktorého m
 Metóda dostane na vstup pôvodnú snímku a pozíciu zdetegovanej tváre a na výstup vráti objekt triedy \texttt{full\_object\_detection}, ktorý obsahuje pozíciu tváre a vektor bodov na tvári.
 
 \subsubsection{Pomer pier}\label{pomerPier}
+V metóde \texttt{ComputeDifferenceBetweenRatios} je implementovaná časť práce \cite{aoki2007voice}.
+Z dvadsiatich bodov na perách sa najprv zrátajú pozície bodov z ktorých sa bude rátat pomer výšky a šírky pier:
+\begin{itemize}
+\item horný - zoberú sa 4 body v hornej časti pery, z ktorých sa spraví primer,
+\item dolný - zoberú sa 4 body v dolnej časti pery, z ktorých sa spraví primer,
+\item pravý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví primer,
+\item ľavý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví primer.
+\end{itemize} 
+Ukážku popísaných bodov je možné vidieť na obrázku \ref{pic-bodyPomeru}.
+Z pravého a ľavého boud sa vyráta šírka pier a z horného a dolného bodu výška.
+Následne sa vypočíta pomer výšky a šírky a zráta sa absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky. 
+Pomocou metódy \texttt{ShiftAndAddRatioDifference} sa vypočítaná absolútna hodnota uloží do 10 prvkového posuvného poľa.
+Ako toto desať prvkové pole funguje, je vysvetlené na obrázku \ref{pic-vysvetleniePosuvnehoPola}.
 
-Podľa práce \cite{aoki2007voice} potrebujeme získať pomer výšky a šírky pier.
-Do pomocného poľa si z všetkých bodov tváre uložíme 6 bodov pier: bod z pravej a z ľavej strany, 2 body z hornej a 2 body z dolnej časti pier. 
-(tu by sa hodil obrázok)
-Výšku pier rátame ako vzdialenosť priemeru 2 bodov z hornej a 2 bodov z dolnej časti pier a šírku pier rátame ako vzdialenosť bodu z pravej a z ľavej strany pier.
-Do 10 prvkového poľa si ukladáme hodnoty rozdielu pomerov medzi dvoma po sebe nasledujúcimi rátaniami pomeru. 
-Ako toto 10 prvkové pole funguje, je vysvetlené na obrázku \ref{pic-vysvetleniePosuvnehoPola}.
-Ak sa v poli nachádza hodnota väčšia ako zvolený prah, vyhlásime program vyhlási, že osoba rozpráva, inak nerozpráva.
-Pri testovaní nám vychádza najlepšie, ak rátame pomer každých minimálne 50 milisekúnd.
-Tým je zabezpečené to, že pomer sa neráta viac ako 20 krát za sekundu a teda výstup programu bude stálejší v čase.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=5cm]{pics/peryBodyUpravene.png}
+		\caption{Ukážka bodov na perách. Horný biely bod je priemer žiernych bodov 50, 52, 61, 63, biely dolný 67, 65, 58, 56, biely pravý 64 a 54 a biely ľavy 48 a 60.}
+		\label{pic-bodyPomeru}
+	\end{center}
+\end{figure}
 
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[height=5cm]{pics/vysvetleniePosuvnehoPola.png}
-		\caption{Vysvetlenie posuvného poľa použitého pri navrhnutej metóde VVAD. 
-		Pri zrátaní nového pomeru sa posunú hodnoty v poli a nová hodnota sa vloží na prázdne miesto. 
-		Takto si pamätáme posledných 10 rozdielov pomerov.}
+		\caption{Vysvetlenie posuvného poľa.
+		Pri zrátaní abslútnej hodnoty rozdielov pomerov sa posunú hodnoty v poli a nová hodnota sa vloží na prázdne miesto. 
+		Takto si pamätáme posledných desať rozdielov pomerov.}
 		\label{pic-vysvetleniePosuvnehoPola}
 	\end{center}
 \end{figure}
 
 \subsubsection{Kontrola reči}\label{kontrolaReci}
+Po pridaní hodnoty do posuvného poľa sa v metode \texttt{Frame} zavolá metóda \texttt{Check\-Speech\-InLastFrames}.
+V nej sa skontroluje, či sa v poli nachádza hodnota väčšia ako určený prah.
+Ak áno metóda \texttt{Frame} dá na výstup objekt tiedy \texttt{Output} s parametrami pravda, počtom tvári 1 a s pozíciou danej tváre.
+Ak nie metóda \texttt{Frame} dá na výstup objekt tiedy \texttt{Output} s parametrami nepravda, počtom tvári 1 a s pozíciou danej tváre.
 
+\subsection{Metóda \texttt{FrameForLearningThreshold}}
 
 \begin{figure}[H]
 	\begin{center}
@@ -578,6 +594,11 @@ Tým je zabezpečené to, že pomer sa neráta viac ako 20 krát za sekundu a te
 		\label{pic-Frame}
 	\end{center}
 \end{figure}
+
+\section{Implementácia AVAD}
+Pri implementovaní AVAD sme používali knižnicu SFML \cite{SFML}.
+Pracuje sa na tom...
+
 \subsection{Testovanie}
 
 Navrhnutú metódu sme testovali na viacerých videách s rozprávajúcou osobou.
@@ -609,7 +630,3 @@ Približne v strede grafu je modrá čiara na úrovni 0,3, čo znamená, že met
 		\label{pic-nespravneRozpoznanie}
 	\end{center}
 \end{figure}
-
-\section{Implementácia AVAD}
-Pri implementovaní AVAD sme používali knižnicu SFML \cite{SFML}.
-Pracuje sa na tom...

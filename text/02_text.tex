@@ -1,25 +1,6 @@
-\chapter{Zoznam použitých skratiek}
-
-\begin{center}
-AVAD - Acoustic Voice Actividy Detection\\
-CLI - Command-Line Interface\\
-CNN - Convolutional neural network\\
-DCNN - Deep convolutional neural network\\
-DNN - Deep neural network\\
-EBGM  - Elastic Bunch Graph Matching\\
-GMM - Gausian Mixture Model\\
-GUI - Graphical User Interface\\
-HCI  - Human–Computer Interaction\\
-HoG - Histogram of oriented gradients\\
-SVM - Support-vector machine\\
-VAD - Voice Activity Detection\\
-VVAD - Visual Voice Actividy Detection
-
-\end{center}
-
 \chapter{Teoretický prehľad}
 
-\section{Human-Computer Interaction}
+\section{Interakcia človek počítač}
 HCI - Human-Computer Interaction (interakcia človek počítač), je medziodborová disciplína, ktorá skúma problematiku interakcie a komunikácie medzi človekom a počítačom.
 Vznikla na prelome 70. a 80. rokov dvadsiateho storočia, v dobe, keď začali vznikať prvé osobné počítače.
 HCI v sebe spája veľa oborovPOZNodborov?, ktoré na prvý pohľad nemajú nič spoločné. 
@@ -32,7 +13,7 @@ Hlavným cieľom HCI je dosiahnuť lepšiu použiteľnosť a intuitívnosť info
 \section{Vývoj HCI}
 V tejto časti popíšeme historický vývoj komunikácie medzi človekom a počítačom.
 
-\subsection{CLI}
+\subsection{Príkazový riadok}
 Od polovice 60. rokov sa CLI - Command-Line Interface (príkazový riadok) používa ako hlavný spôsob komunikácie človeka s počítačom.
 Používateľ zadáva príkazy pomocou klávesnice, výsledky vidí na monitore väčšinou v textovej podobe.
 Používanie CLI pokračuje v 70. a 80. rokoch systémoch OpenVMS, Unix a osobných počítačoch MS-DOS, CP/M a Apple DOS.
@@ -41,31 +22,32 @@ Pre skúseného používateľa má CLI veľa výhod, uvedieme niektoré z nich:
 	\item rýchlosť a efektívnosť,
 	\item možnosť použitie skriptov,
 	\item história príkazov,
-	\item nie je potrebná myš, stačí klávesnica,...
+	\item nie je potrebná myš, stačí klávesnica, \ldots
 \end{itemize}
 Ale pre menej skúseného používateľa prináša veľa nevýhod, napríklad:
 \begin{itemize}
 	\item prostredie je veľmi neintuitívne a striktné,
-	\item nemožnosť použitia myši, ...
+	\item nemožnosť použitia myši, \ldots
 \end{itemize}
-Aj v dnešnej dobe je CLI často používané, najmä medzi používateľmi linuxu, na spravovanie serverov a podobne.
+CLI bolo postupne nahradené grafickým prostredím, no v niektorých oblastiach sa stále používa. 
+Najmä medzi používateľmi linuxu, na spravovanie serverov alebo pri programovaní v niektorých prostrediach.
 
-\subsection{GUI}
+\subsection{Grafické používateľské rozhranie}
 S príchodom väčšieho grafického výkonu vzniká GUI - Graphical User Interface (Grafické používateľské rozhranie). 
-Okrem klávesnice sa používa počítačová myš a vznikajú okná.
+Okrem klávesnice sa používa počítačová myš a vzniká pracovná plocha, okná, ikony, rôzne gestá (dvojklik myši, drag and drop, \ldots), zlepšujú sa možnosti používania pre slabozrakých.
 Oproti CLI má GUI veľké výhody pre neskúseného používateľa:
 \begin{itemize}
 	\item intuitívnosť,
-	\item rýchlosť - v špecifických prípadoch (napr. presúvanie súborov), ...
+	\item rýchlosť - v špecifických prípadoch (napr. presúvanie súborov), \ldots
 \end{itemize}
 Často ale môže nastať prípad, keď sú niektoré nastavenia príliš hlboko v systéme a pomocou GUI sa k nim nie je možné dostať.
 V dnešnej dobe je GUI najpoužívanejším typom HCI na osobných počítačoch.
 
-\subsection{NUI}
-S príchodom nových technológií (smatrfónov, virtuálnej reality, ...) sa do popredia začína dostávať NUI - Natural User Interface (Prirodzené používateľské rozhranie).
+\subsection{Prirodzené používateľské rozhranie}
+S príchodom nových technológií (smartfónov, virtuálnej reality, \ldots) sa do popredia začína dostávať NUI - Natural User Interface (Prirodzené používateľské rozhranie).
 Pomocou NUI dokáže používateľ úplne prirodzene, priamo a intuitívne interagovať s počítačom.
 Príkladom NUI, s ktorým sa už asi každý stretol, je používanie gest na dotykových obrazovkách.
-Ďalšie príklady NUI je možné vidiet na nasledujúcich obrázkoch \ref{pic-GoogleHome}, \ref{pic-Microrobotics} a \ref{pic-calcFlow}.
+Ďalšie príklady NUI je možné vidieť na nasledujúcich obrázkoch \ref{pic-GoogleHome}, \ref{pic-Microrobotics} a \ref{pic-calcFlow}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -94,29 +76,15 @@ Príkladom NUI, s ktorým sa už asi každý stretol, je používanie gest na do
 	\end{center}
 \end{figure}
 
-\chapter{Motivácia a ciele}
-Jedným z hlavných motívov, prečo vznikla táto práca bola nasledujúca situácia. 
-
-Predstavme si situáciu konferenčného hovoru. 
-Jeden z účastníkov potrebuje niečo urobiť, no jeho aktivita by bola hlučná, čím by rušil ostatných účastníkov a teda si vypne mikrofón. 
-Samozrejme, neskôr keď chce niečo povedať, nezapne mikrofón a ostatní ho nepočujú.
-
-Ako by sme sa mohli popísanej situácií vyhnúť? 
-Čo tak zapínať a vypínať mikrofón automaticky podla toho, či človek sediaci pred kamerou rozpráva alebo nerozpráva.
-Jedným z riešení by mohla byť detekcia reči (Voice activity detection - VAD) pomocou mikrofónu (Acoustic Voice Actividy Detection - AVAD).
-Toto riešenie však nemusí byť najpresnejšie, napríklad by nemuselo detegovať tichý hlas alebo by detegovalo nechcený šum a podobne.
-Vhodným zlepšením by mohlo byť zlúčenie AVAD s VAD pomocou obrazu webovej kamery (Visual Voice Actividy Detection - VVAD).
-Naštudovali sme niekoľko existujúcich riešení, ktoré sú popísané v nasledujúcej kapitole.
-
-Ďalším krokom pri vypracovávaní tejto práce, bude implementovanie vlastného riešenia VAD inšpirovaného existujúcimi riešeniami a snaha o jeho implementáciu do existujúceho videokonferenčného systému. 
-
-\chapter{Riešenia VAD}
+\chapter{Riešenia detekcie reči}
 V nasledujúcich odsekoch ukážeme niekoľko existujúcich riešení.
 Zameriame sa na použité technológie, dosiahnuté výsledky a problémy, ktoré majú uvedené riešenia.\\
 
-V \cite{aoki2007voice} riešia VAD u šoféra v aute.
+V \cite{aoki2007voice} riešia VAD - Voice Activity Detection (detekciu reči) u šoféra v aute.
+V tomto prostredí je veľa nepriaznivých zvukov, ako je napríklad zvuk motora, rádio, reč spolucestujúcich, \ldots. 
+Detekcia reči môže byť pre šoféra veľmi užitočné, lebo je zaneprázdnený riadením vozidla, no z dôvodov uvedených v predchádzajúcej vete je veľmi náročná.
 Reč detegujú zo zvuku pomocou Gausian mixture model (GMM).
-Túto detekciu kombinujú s VVAD.
+Túto detekciu kombinujú s VVAD - Voice Activity Detection (VAD pomocou videa).
 Kvôli odfiltrovaniu nepriaznivých odleskov a nedostatku svetla v noci používajú infračervenú kameru.
 Z šedo-tónového obrazu získavajú obrysy pier, pomocou Elastic Bunch Graph Matching (EBGM).
 Ukážku získaného obrysu pier je možné vidieť na \ref{pic-EBGM}. 
@@ -144,7 +112,7 @@ Obrázok \ref{pic-pery} vysvetľuje prečo sa pomer mení, len keď človek rozp
 \end{figure}
 
 Navrhnutú metódu testovali tak, že šofér (raz muž a raz žena) prečítal 100 názvov japonských miest.
-Testovaná metóda priemerne zlepšuje detekciu reči o 40\% oproti použitiu len AVAD.  
+Testovaná metóda priemerne zlepšuje detekciu reči o 40\% oproti použitiu len AVAD - Audio Voice Activity Detection (VAD pomocou zvuku).  
 Získane výsledky možno vidieť v tabuľke \ref{tab-results}.
 
 \begin{table}[H]
@@ -167,10 +135,10 @@ Nevýhodou metódy je to, že funguje len pri pohľade spredu. V článku sa nep
 
 V \cite{vieriu2014real} sa zaoberajú detegovaním reči z jednoduchej webovej kamery. 
 Najprv orežú snímky videa na oblasť pier.
-Snímky prevedú do šedotónovej oblasti, vyrežú 200 náhodných oblastí a urobia rozdiel všetkých snímok a prvého. 
+Snímky prevedú do šedotónovej oblasti, vyrežú 200 ná\-hod\-ných oblastí a urobia rozdiel všetkých snímok a prvého. 
 Takto vedia modelovať zmeny vo vzhľade podľa rozdielov v čase.
 Z každého rozdielu počítajú štatistické koeficienty priemer, smerodajnú odchýlku a priemer nad prvou deriváciou. 
-Aplikovaním popísaného postupu vytvorili tréningovú množinu o veľkosti 130000.
+Aplikovaním popísaného postupu vytvorili tréningovú množinu o veľkosti 130 000.
 Následne natrénovali klasifikátor Random Forest s veľkosťou 20 stromov a maximálnou hĺbkou 10. 
 Random Forest porovnávali s klasifikátorom Random Ferns. 
 Random Ferns dosahovali pri rôznych nastaveniach parametrom stále horšie výsledky ako Random Forests.
@@ -188,13 +156,13 @@ Porovnanie týchto dvoch metód je na obrázku \ref{pic-ferns&forests}.
 Podľa článku navrhnutá metóda používa pohľad na tvár spredu a je použiteľná v reálnom čase (30 fps), kvôli rýchlosti výpočtu Random Forest.\\
 
 V článku \cite{joosten2015voice} popisujú a testujú metódu VVAD založenú na časopriestorových Gáborových filtroch (angl. Spatiotemporal Gabor filters), ktorá podľa autorov nebola nikdy predtým na VVAD použitá.
-Používajú dve dátové sady: CUAVE - obsahuje nahrávky reči pri pohľade spredu aj z profilu a LIVER - obsahuje nahrávky vyslovovania holandského slova "liver" pri pohľade spredu.
+Používajú dve dátové sady: CUAVE - obsahuje nahrávky reči pri pohľade spredu aj z profilu a LIVER - obsahuje nahrávky vyslovovania holandského slova \uv{liver} pri pohľade spredu.
 Ich metóda sa skladá z 2 fáz: 
 \begin{itemize}
 	\item fáza predspracovania - aplikovanie časopriestorových Gáborových filtrov na zistenie energií v konkrétnych rýchlostiach (jeden z parametrov časopriestorových Gáborových filtrov),
 	\item agregačná a klasifikačná fáza vytvárajúca sumáciu a klasifikátor, na priradzovanie agregovaných energetických hodnôt do binárnych tried (SPEECH a NON-SPEECH).
 \end{itemize}
-Nimi navrhnutú metódu porovnávajú s 2 referenčnými metódami - metódou založenou na rozdieloch snímok a metódou založenou na štandardných Gabor filters. 
+Autormi navrhnutú metódu porovnávajú s 2 referenčnými metódami - metódou založenou na rozdieloch snímok a metódou založenou na štandardných Gabor filters. 
 Ich metóda bola v skoro všetkých prípadoch lepšia ako referenčné metódy. 
 Niektoré porovnania je možné vidieť na obrázku \ref{pic-joosten2015voice}.
 
@@ -236,7 +204,7 @@ Na obrázku \ref{pic-ranjan2017hyperface-siet} je architektúra siete HyperFace.
 	\end{center}
 \end{figure}
 
-Kvôli testovaniu na rôznych dátových sadách trénovali sieť pre rôzne počty bodov (21, 68, ...) na tvári. 
+Kvôli testovaniu na rôznych dátových sadách trénovali sieť pre rôzne počty bodov (21, 68, \ldots) na tvári. 
 Ukážka výsledkov algoritmu je na obrázku \ref{pic-pic-ranjan2017hyperface-xichty.png}.
 
 \begin{figure}[H]
@@ -292,7 +260,7 @@ Existujú 2 dôvody, prečo toto riešenie nie je pre nás vhodné:
 Toto SDK bolo nahradené novým multiplatformovým SDK \cite{realsensenew}, ktoré už ale nevie pracovať s bežnou webovou kamerou. 
 
 \subsection{Knižnica OpenCV}
-OpenCV\cite{openCv} (Open Source Computer Vision Library) je multiplatformová knižnica zameraná na počítačové videnie.
+OpenCV \cite{openCv} (Open Source Computer Vision Library) je multiplatformová knižnica zameraná na počítačové videnie.
 V knižnici OpenCV je implementovaná detekcia tvárí a aj detekcia bodov na tvári z článku \cite{kazemi2014one}. 
 Prečo nepoužijeme knižnicu OpenCV si popíšeme v kapitole \ref{OpenCVvsDlibNadpis}. 
 Ukážku detekcie je možné vidieť na obrázku \ref{pic-openCv}. 
@@ -320,7 +288,7 @@ Ukážka detekcie bodov na tvári pomocou knižnice Dlib je na obrázku \ref{pic
 	\end{center}
 \end{figure}
 
-\subsection{Porovnanie knižní OpenCV a Dlib} \label{OpenCVvsDlibNadpis}
+\subsection{Porovnanie knižníc OpenCV a Dlib} \label{OpenCVvsDlibNadpis}
 V oboch knižniciach je implementovaná detekcia bodov na tvári z článku \cite{kazemi2014one}.
 Ako problém ostáva nájdenie tváre v obraze.
 Obe knižnice ponúkajú viacero metód, ktoré tento problém riešia.
@@ -344,7 +312,7 @@ Nevýhody:
 \begin{itemize}
 	\item deteguje veľa objektov, ktoré nie sú tvárami,
 	\item nefunguje na tvárach, ktoré nie sú pri pohľade spredu,
-	\item Nefunguje ani pri čiastočnom zakrytí tváre.\\
+	\item nefunguje ani pri čiastočnom zakrytí tváre.\\
 \end{itemize}
 Detekcia tváre pomocou \textbf{DNN} je v OpenCV implementovaná od verzie 3.3. \\
 \\Výhody:
@@ -441,11 +409,11 @@ Výstup metódy by mal záležať od vstupných polí nasledovne:
 Takýmto spôsobom môže byť využitie knižnice väčšie.
 Napríklad v prípade nedetegovania tváre sa môže znížiť kvalita prenášaného obrazu pri videohovore, čím sa zníži záťaž procesora aj sieťovej linky.
 
-\chapter{Implementácia a testovanie}
+\chapter{Implementácia}
 V tejto kapitole popíšeme implementáciu nami navrhnutého riešenia VAD v C++ knižnici.
 
 \section{Použitý hardware a software}
-Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM) a na počítači HP Z240 ( Intel Xeon E3-1245, 16GB ram)
+Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM) a na počítači HP Z240 (Intel Xeon E3-1245, 16GB ram)
 Pre testovanie sme používali webovú kameru LifeCam Cinema.
 Vyvíjali sme jazyku C++, ktorý je najvhodnejší pre prácu s videom.
 Používali sme knižnice OpenCV, Dlib, SFML.
@@ -479,7 +447,7 @@ V nasledujúcej časti popíšeme fungovanie niektorých metód detailne.
 \subsection{Metóda \texttt{Frame}}
 Zo snímky, ktorú dostane metóda \texttt{Frame} na vstupe sa vytvorí kópia, ktorá sa predspracuje.
 Predspracovanie spočíva v zmene rozlíšenia tak, aby šírka snímky bola  720 pixelov (toto predspracovanie budeme nazývať preškálovanie).
-Toto rozlíšenie bolo zvolené tak, aby nasledujúca detekcia tváre v snímke bola dostatočne rýchla aj na menej výkonných procesoroch.
+Rozlíšenie bolo zvolené tak, aby nasledujúca detekcia tváre v snímke bola dostatočne rýchla aj na menej výkonných procesoroch.
 Detekcia tváre je presnejšie popísaná v časti \ref{detekciaTvare}.
 Výstupom z detekcie tváre je pole pozícií nájdených tvárí v kopijí pôvodnej snímky. 
 Následne, ak sa nenašla práve jedna tvár, tak sa daná snímka preskakuje. 
@@ -496,6 +464,10 @@ Detailný popis metódy \texttt{Frame} je na obrázku \ref{pic-Frame}.
 		\label{pic-Frame}
 	\end{center}
 \end{figure}
+
+Pri používaní knižnice je možné volať metódu \texttt{Frame} ľubovoľne veľa krát za sekundu, minimálne však 20 krát za sekundu, inak nebude fungovanie korektné.
+Metóda \texttt{Frame} si zapamätá aktuálny čas, kedy spracovala snímku na vstupe a v prípade, že metóda je volaná viac ako 20 krát za sekundu, najprv skontroluje čas od posledného spracovania snímky.
+Ak je menší ako 50ms tak snímku zahadzuje, inak prebieha spracovanie.
 
 \subsubsection{Detekcia tváre}\label{detekciaTvare}
 Ako sme popísali v časti \ref{OpenCVvsDlibNadpis}, na detekciu tvárí sme použili knižnicu Dlib, konkrétne detekciu tvárí pomocou HoG. 
@@ -516,10 +488,11 @@ Pomocou uvedených súborov však nie je možné natrénovať dostatočne presn�
 Na stránke knižnice Dlib sa dá nájsť dátová sada ibug\_300W\_large\_face\_landmark\_dataset, čo je vlastne dátová sada 300-W \cite{ibug} s pridanými zrkadlovo otočenými obrázkami (pri použití dátovej sady  300-W \cite{ibug} žiadajú citovať \cite{sagonas2016300}, \cite{sagonas2013300} a \cite{sagonas2013semi}) 
 Dátová sada  300-W \cite{ibug} obsahuje fotografie z dátových sád afw, helen, ibug a lfpw. 
 Dátová sada samozrejme obsahovala aj testovaci a trénovací xml súbor s označenými umiestneniami 68 bodov na tvári, pomocou ktorých je možné natrénovať presnejší model.
-Trénovací súbor obsahoval 6666 tvári a testovací obsahoval 1008 tvári.
+Trénovací súbor obsahoval 6 666 tvári a testovací obsahoval 1008 tvári.
 Knižnica Dlib obsahuje nástroj na vytváranie a úpravu xml súborov s informáciami o bodoch na tvárach na fotografiách a aj nástroj na trénovanie a testovanie modelu na základe fotografií a xml súborov.
 Pomocou nástroja na prácu s xml súbormi z knižnice Dlib a editora Sublime Text sme upravili počet bodov na tvári v xml súboroch.
-Nástroj na trénovanie má možnosť nastaviť parametre trénovania, ako je napríklad hĺbka stromu a. i. (POPIŠ VIAC)
+Nástroj na trénovanie má možnosť nastaviť parametre trénovania, ako je napríklad hĺbka stromu a. i. 
+%dopis vela veci
 Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
 \begin{itemize}
 	\item 20 bodový model pier. 
@@ -550,13 +523,13 @@ Metóda dostane na vstup pôvodnú snímku a pozíciu zdetegovanej tváre a na v
 V metóde \texttt{ComputeDifferenceBetweenRatios} je implementovaná časť práce \cite{aoki2007voice}.
 Z dvadsiatich bodov na perách sa najprv zrátajú pozície bodov z ktorých sa bude rátat pomer výšky a šírky pier:
 \begin{itemize}
-\item horný - zoberú sa 4 body v hornej časti pery, z ktorých sa spraví primer,
-\item dolný - zoberú sa 4 body v dolnej časti pery, z ktorých sa spraví primer,
-\item pravý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví primer,
-\item ľavý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví primer.
+\item horný - zoberú sa 4 body v hornej časti pery, z ktorých sa spraví priemer,
+\item dolný - zoberú sa 4 body v dolnej časti pery, z ktorých sa spraví priemer,
+\item pravý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví priemer,
+\item ľavý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví priemer.
 \end{itemize} 
 Ukážku popísaných bodov je možné vidieť na obrázku \ref{pic-bodyPomeru}.
-Z pravého a ľavého boud sa vyráta šírka pier a z horného a dolného bodu výška.
+Z pravého a ľavého bodu sa vyráta šírka pier a z horného a dolného bodu výška.
 Následne sa vypočíta pomer výšky a šírky a zráta sa absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky. 
 Pomocou metódy \texttt{ShiftAndAddRatioDifference} sa vypočítaná absolútna hodnota uloží do 10 prvkového posuvného poľa.
 Ako toto desať prvkové pole funguje, je vysvetlené na obrázku \ref{pic-vysvetleniePosuvnehoPola}.
@@ -564,7 +537,7 @@ Ako toto desať prvkové pole funguje, je vysvetlené na obrázku \ref{pic-vysve
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[height=5cm]{pics/peryBodyUpravene.png}
-		\caption{Ukážka bodov na perách. Horný biely bod je priemer žiernych bodov 50, 52, 61, 63, biely dolný 67, 65, 58, 56, biely pravý 64 a 54 a biely ľavy 48 a 60.}
+		\caption{Ukážka bodov na perách. Horný biely bod je priemer čiernych bodov 50, 52, 61, 63, biely dolný 67, 65, 58, 56, biely pravý 64 a 54 a biely ľavý 48 a 60.}
 		\label{pic-bodyPomeru}
 	\end{center}
 \end{figure}
@@ -585,48 +558,51 @@ V nej sa skontroluje, či sa v poli nachádza hodnota väčšia ako určený pra
 Ak áno metóda \texttt{Frame} dá na výstup objekt tiedy \texttt{Output} s parametrami pravda, počtom tvári 1 a s pozíciou danej tváre.
 Ak nie metóda \texttt{Frame} dá na výstup objekt tiedy \texttt{Output} s parametrami nepravda, počtom tvári 1 a s pozíciou danej tváre.
 
+To, že sa kontroluje hodnota z posledných 10 snímok znamená, že program kontroluje aktivitu úst pol sekundu do minulosti.
+V prípade reči sa vyskytne hodnota väčšia ako prah v poli hneď na prvom mieste a teda program okamžite korektne zareaguje na reč. 
+Za problém by mohlo byť považované to, že hodnota väčšia ako prah sa bude v posuvnom poli vyskytovať ešte pol sekundy.
+To bude spôsobovať, že program bude vracať zdetegovanú reč, aj keď už reč nebude prebiehať.
+Výsledný efekt je ale opačný. 
+Ak by sa reč vyhodnocovala iba z aktuálnej snímky, respektíve rozdielu dvoch snímok, výstup programu by priveľmi skákal medzi zdetegovanou a nezdetegovanou rečou.
+Naše riešenie teda spôsobuje, že výstup programu je hladší a v prípade reči hneď korektne zareaguje.
+
 \subsection{Metóda \texttt{FrameForLearningThreshold}}
+Pred začatím používanie detekcie reči je potrebné určiť prah, ktorý sa používa v metóde  \texttt{Frame}. 
+Keďže každý človek ma ústa trocha iného tvaru, každý bude potrebovať iný prah.
+Vymysleli sme poloautomatickú metódu určenia prahu, ktorá je účinná a používateľsky prívetivá.
+Pred začatím používania metódy \texttt{Frame} je potrebné posielať približne desať sekúnd snímky metóde  \texttt{FrameForLearningThreshold}, ktorá určí prah. 
+Počas týchto desiatich sekúnd musí používateľ neustále priamo pozerať do kamery a kedykoľvek povedať vetu: \uv{Toto je trénovacie video.} a okrem tejto vety nepohybovať perami.
+Takto počas desiatich sekúnd ukladá metóda  \texttt{Frame\-For\-Learning\-Threshold} vypočítané pomery do poľa 200 posledných pomerov.
+Hneď ako sa pole zaplní sa zavolá metóda \texttt{FindThreshold}, ktorá tieto hodnoty usporiada podľa veľkosti a ako nájdený prah vráti dvanástu najväčšiu hodnotu.
+Hodnota dvanásť bola zvolená pri testovaní ako najvhodnejšia.
+Príklad takto určeného prahu je na obrázku \ref{pic-kalibraciaUsporiadane}.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=8cm]{pics/kalibraciaUsporiadane.png}
+		\caption{Graf usporiadaných absolútnych hodnôt pomerov, na základe ktorých sa určuje prah. Dvanásta najväčšia hodnota je vrátená ako prah.}
+		\label{pic-kalibraciaUsporiadane}
+	\end{center}
+\end{figure}
+
+Keď máme určený prah, metóda \texttt{FrameForLearningThreshold} vráti pravdivostnú hodnotu pravda a tým sa určovanie ukončí a programátor, ktorý bude používať knižnicu VVAD bude vedieť, že prah je nastavený.
+Vo všetkých predchádzajúcich volaniach vracia metóda \texttt{FrameForLearningThreshold} pravdivostnú hodnotu nepravda.
+Detailný popis metódy \texttt{FrameForLearningThreshold} je na obrázku \ref{pic-FrameForLearningThreshold}.
 
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[height=10.3cm]{pics/FrameForLearningThreshold.jpg}
 		\caption{Graf priebehu metódy \texttt{FrameForLearningThreshold}. Vo vrcholoch sú akcie ktoré sa vykonávajú, šípky znázorňujú výstupy z akcií.}
-		\label{pic-Frame}
+		\label{pic-FrameForLearningThreshold}
 	\end{center}
 \end{figure}
+
+Rovnako ako v metóde \texttt{Frame} je možné volať metódu \texttt{FrameForLearningThreshold} ľubovoľný počet krát za sekundu, opäť však minimálne dvadsať krát a metóda spracúvava rovnakým spôsobom každú snímku, ktorá prišla po 50 ms od predchádzajúcej spracovanej snímky.
 
 \section{Implementácia AVAD}
 Pri implementovaní AVAD sme používali knižnicu SFML \cite{SFML}.
-Pracuje sa na tom...
+Pracuje sa na tom\ldots buduci tyzden\ldots
 
-\subsection{Testovanie}
+\chapter{Testovanie}
 
-Navrhnutú metódu sme testovali na viacerých videách s rozprávajúcou osobou.
-Po niekoľkých videách sme odhadli vhodnú hodnotu prahu. 
-Takto zvolený prah však nemusí vždy správne určiť, či prebieha reč alebo nie.
-(prah asi bude dobre upravovat v case - to este musim domysliet)
-Na obrázku \ref{pic-spravneRozpoznanie} je graf rozdielu pomerov, prislúchajúci videu, kde osoba na zaciatku rozprávala a ku koncu nie. 
-V tomto prípade navrhnutá metóda správne vyhodnotila priebeh reči.
-
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[height=7cm]{pics/spravneRozpoznanie.png}
-		\caption{Korektná detekcia reči pomocou navrhnutej metódy VVAD.
-		Červené body sú absolútna hodnota rozdielov pomerov 2 po sebe idúcich meraní. 
-		Modrá čiara vo výške 0,6 znamená, že reč bola detekovaná a vo výške 0,3, že nebola detekovaná.}
-		\label{pic-spravneRozpoznanie}
-	\end{center}
-\end{figure}
-
-Na obrázku \ref{pic-nespravneRozpoznanie} je graf rozdielu pomerov, prislúchajúci videu s inou osobou, ktorá na začiatku nerozprávala, potom rozprávala a ku koncu opäť nerozprávala. 
-Približne v strede grafu je modrá čiara na úrovni 0,3, čo znamená, že metóda vyhodnotila túto časť videa ako časť kde osoba nerozpráva, čo nie je korektné.
-
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[height=7cm]{pics/nespravneRozpoznanie.png}
-		\caption{Nepresná detekcia reči pomocou navrhnutej metódy VVAD.
-		Červené body sú absolútna hodnota rozdielov pomerov 2 po sebe idúcich meraní. 
-		Modrá čiara vo výške 0,6 znamená, že reč bola detekovaná a vo výške 0,3, že nebola detekovaná.}
-		\label{pic-nespravneRozpoznanie}
-	\end{center}
-\end{figure}
+Tento týždeň na tom budem pracovať.

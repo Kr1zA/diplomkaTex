@@ -1,4 +1,25 @@
 \chapter*{Úvod}
 \addcontentsline{toc}{chapter}{Úvod}  %pridanie nadpisu do obsahu
 
-Tu bude úvod.
+Predstavme si situáciu konferenčného hovoru. 
+Jeden z účastníkov potrebuje niečo urobiť, no jeho aktivita by bola hlučná, čím by rušil ostatných účastníkov a teda si vypne mikrofón. 
+Samozrejme, neskôr keď chce niečo povedať, nezapne mikrofón a ostatní ho nepočujú.
+Ako by sme sa mohli popísanej situácií vyhnúť? 
+Čo tak zapínať a vypínať mikrofón automaticky podla toho, či človek sediaci pred kamerou rozpráva alebo nerozpráva.
+Jedným z riešení by mohla byť detekcia reči (Voice activity detection - VAD) pomocou mikrofónu (Acoustic Voice Actividy Detection - AVAD).
+Toto riešenie však nemusí byť najpresnejšie, napríklad by nemuselo detegovať tichý hlas alebo by detegovalo nechcený šum a podobne.
+Vhodným zlepšením by mohlo byť pridanie VAD pomocou obrazu webovej kamery (Visual Voice Actividy Detection - VVAD).
+VVAD by mohlo priniesť viacero vylepšení, napríklad: odstránenie detekcie nechcených zvukov a šumu.
+
+V práci sa zaoberáme možnosťami detekcie tváre v obraze, detekciou bodov na tvári a detekciou reči všeobecne. 
+Rozoberáme existujúce riešenia danej problematiky a snažíme sa navrhnúť a implementovať vlastné riešenia.
+
+Cieľom práce je analyzovať existujúce prístupy k riadeniu SW produktov pomocou HCI komponentov. 
+Následne navrhneme vlastné HCI komponenty a pokúsime sa ich vhodným spôsobom ich implementovať.
+Nakoniec sa budeme snažiť pilotne implementovať vytvorené komponenty do existujúcich SW produktov.
+
+V prvej kapitole sa zaoberáme pojmom Human-Computer Interface a jeho históriou.
+V druhej opisujeme existujúce riešenia detekcie reči.
+V tretej je analyzovaný návrh riešenia, možnosti VVAD a AVAD a ich existujúce implementácie.
+Detailný popis našej implementácie sa nachádza v kapitole 4.
+Posledná kapitola obsahuje výsledky testovania nami implementovaného riešenia VAD.

@@ -5,29 +5,37 @@
 \def\skola{Univerzita Pavla Jozefa Šafárika v Košiciach}
 \def\mesto{Košice}
 \def\fakulta{Prírodovedecká fakulta}
-\def\nazov{Riadenie SW produktov pomocou HCI komponentov}
+\def\nazov{Riadenie softvérových produktov pomocou HCI komponentov}
 \def\autor{Richard Staňa}
-\def\rok{2018}
+\def\rok{2019}
 \def\typPrace{Diplomová práca}
 \def\studijnyProgram{Informatika} %AIS2 -> Studijne programy -> Studijny plan -> hlavicka HTML dokumentu
 \def\studijnyOdbor{9.2.1. - informatika} %AIS2 -> Studijne programy -> Studijny plan -> hlavicka HTML dokumentu
 \def\skoliacePracovisko{Ústav informatiky}
-\def\veduciPrace{doc. RNDr. Gabriel S e m a n i š i n, PhD.}
+\def\veduciPrace{prof. RNDr. Gabriel S e m a n i š i n, PhD.}
 %\def\skolitel{Celé meno školiteľa} %bud veduci alebo skolitel
 \def\konzultantPrace{Ing. Viktor Michalčin, PhD., Matúš Kirchmeyer}
 \def\skrytZadanie{} %odkomentanim skryje stranu zadania
 %\def\zadaniePDF{text/zadanie.pdf} %prilozi zadanie z PDF suboru
 %\def\zadanieObrazok{pics/picture.jpg} %prilozi zadanie z obrazku
-\def\podakovanie{Tu bude poďakovanie.}
-\def\abstraktPoSlovensky{Tu bude abstrakt.}
-\def\klucoveSlovaPoSlovensky{kľúčové slovo 1, kľúčové slovo 2, kľúčové slovo 3, kľúčové slovo 4}
-\def\abstraktPoAnglicky{There will be abstract}
-\def\klucoveSlovaPoAnglicky{keyword 1, keyword 2, keyword 3, keyword 4}
+
+%\def\podakovanie{Na tomto mieste by som chcel poďakovať vedúcemu práce prof. Gabrielovi Semanišinovi za to, že vymyslel tému práce a za jeho cenné rady pri spisovaní práce a konzultantovi práce Ing. Viktorovi Michalčinovi, PhD. za  rady pri implementačných problémoch. Osobitné poďakovanie patrí RNDr. Matejovi Nikorovičovi, PhD. za to, že mi ukázal krásy analýzy obrazu.}
+
+\def\abstraktPoSlovensky{
+Tu bude abstrakt
+1. Analyzovať existujúce prístupy k riadeniu SW produktov pomocou HCI komponentov.
+2. Navrhnúť vlastné HCI komponenty a vhodným spôsobom ich implementovať.
+3. Pokúsiť sa pilotne implementovať vytvorené komponenty do existujúcich SW produktov.}
+\def\klucoveSlovaPoSlovensky{videokonferenčný a kolaboračný systém, detekcia reči, detekcia tváre, detekcia bodov na tvári, HCI, riadenie SW produktov}
+
+%\def\abstraktPoAnglicky{There will be abstract}
+%	\def\klucoveSlovaPoAnglicky{voice aktivity detection, face detection, face landmarks detection, HCI, SW product control}
 
 \usepackage{thesis} %Styl zaverecnej prace. Nemazat a nepresuvat, lebo pouziva predchadzajuce premenne dokumentu.
 
 \begin{document}
 	\input text/00_formality.tex
+	\input text/08_zoznamSkratiek.tex
 	\input text/01_uvod.tex
 	\input text/02_text.tex
 	\input text/03_zaver.tex

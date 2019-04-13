@@ -3,7 +3,7 @@
 \section{Interakcia človek počítač}
 HCI - Human-Computer Interaction (interakcia človek počítač), je medziodborová disciplína, ktorá skúma problematiku interakcie a komunikácie medzi človekom a počítačom.
 Vznikla na prelome 70. a 80. rokov dvadsiateho storočia, v dobe, keď začali vznikať prvé osobné počítače.
-HCI v sebe spája veľa oborovPOZNodborov?, ktoré na prvý pohľad nemajú nič spoločné. 
+HCI v sebe spája veľa odborov, ktoré na prvý pohľad nemajú nič spoločné. 
 Ak sa však chceme zaoberať vytváraním používateľských rozhraní, kľúčové sú nasledujúce disciplíny: informatika, ergonómia, umenie, design, psychológia, kognitívna psychológia, lingvistika, sociológia, filozofia, antropológia, fyziológia, umelá inteligencia, inžinierstvo, kognitívna veda, etika, estetika a. i.
 
 Informatika sa v oblasti HCI zameriava najmä na design a tvorbu informačných systémov a ich rozhraní tak, aby boli co najjednoduchšie a najintuitívnejšie pre špecifickú skupinu používateľov.
@@ -11,7 +11,9 @@ HCI skúma aj vnímanie, správanie a informačné potreby koncového používat
 Hlavným cieľom HCI je dosiahnuť lepšiu použiteľnosť a intuitívnosť informačných systémov aj pre menej odborných používateľov. \cite{HCI}
 
 \section{Vývoj HCI}
-V tejto časti popíšeme historický vývoj komunikácie medzi človekom a počítačom.
+Je zaujímavé sledovať, ako sa HCI vyvíja v priebehu času. 
+Od primitívnych klávesníc sme sa postupne dostali cez počítačovú myš, dotykové obrazovky a podobne až ku hlasovému ovládaniu a rôznym gestám, ktoré nám zjednodušujú každodenný život.
+V tejto časti presnejšie popíšeme historický vývoj komunikácie medzi človekom a počítačom.
 
 \subsection{Príkazový riadok}
 Od polovice 60. rokov sa CLI - Command-Line Interface (príkazový riadok) používa ako hlavný spôsob komunikácie človeka s počítačom.
@@ -142,7 +144,7 @@ Aplikovaním popísaného postupu vytvorili tréningovú množinu o veľkosti 13
 Následne natrénovali klasifikátor Random Forest s veľkosťou 20 stromov a maximálnou hĺbkou 10. 
 Random Forest porovnávali s klasifikátorom Random Ferns. 
 Random Ferns dosahovali pri rôznych nastaveniach parametrom stále horšie výsledky ako Random Forests.
-Porovnanie týchto dvoch metód je na obrázku \ref{pic-ferns&forests}.
+Porovnanie týchto dvoch metód je na obr. \ref{pic-ferns&forests}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -164,7 +166,7 @@ Ich metóda sa skladá z 2 fáz:
 \end{itemize}
 Autormi navrhnutú metódu porovnávajú s 2 referenčnými metódami - metódou založenou na rozdieloch snímok a metódou založenou na štandardných Gabor filters. 
 Ich metóda bola v skoro všetkých prípadoch lepšia ako referenčné metódy. 
-Niektoré porovnania je možné vidieť na obrázku \ref{pic-joosten2015voice}.
+Niektoré porovnania je možné vidieť na obr. \ref{pic-joosten2015voice}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -193,7 +195,7 @@ Uvádzajú dve verzie ich algoritmu nazývaného HyperFace:
 \item HyperFace-ResNet, krotý je postavený na modeli ResNet-101 a prináša značné zlepšenie výkonu algoritmu,
 \item Fast-HyperFace, ktorý používa rýchlejší detektor tvárí na zrýchlenie algoritmu.
 \end{itemize}
-Na obrázku \ref{pic-ranjan2017hyperface-siet} je architektúra siete HyperFace. 
+Na obr. \ref{pic-ranjan2017hyperface-siet} je architektúra siete HyperFace. 
 
 \begin{figure}[H]
 	\begin{center}
@@ -205,7 +207,7 @@ Na obrázku \ref{pic-ranjan2017hyperface-siet} je architektúra siete HyperFace.
 \end{figure}
 
 Kvôli testovaniu na rôznych dátových sadách trénovali sieť pre rôzne počty bodov (21, 68, \ldots) na tvári. 
-Ukážka výsledkov algoritmu je na obrázku \ref{pic-pic-ranjan2017hyperface-xichty.png}.
+Ukážka výsledkov algoritmu je na obr. \ref{pic-pic-ranjan2017hyperface-xichty.png}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -217,7 +219,7 @@ Ukážka výsledkov algoritmu je na obrázku \ref{pic-pic-ranjan2017hyperface-xi
 \end{figure}
 
 Práca \cite{kazemi2014one} popisuje detekciu bodov na tvári pomocou súboru regresných stromov v reálnom čase. 
-Na obrázku \ref{pic-oneMsBody.png} sú výsledky algoritmu na testovacej dátovej sade.
+Na obr. \ref{pic-oneMsBody.png} sú výsledky algoritmu na testovacej dátovej sade.
 
 \begin{figure}[H]
 	\begin{center}
@@ -241,7 +243,7 @@ V roku 2018 predstavil Intel prvé hĺbkové kamery RealSense.
 K týmto kamerám vydal SDK \cite{realsensedis} pre operačný systém Windows. 
 Toto SDK dokázalo v obmedzenej miere pracovať aj s bežnou webovou kamerou. 
 Dostupná bola pre nás dôležitá metóda detekcie bodov na tvári. 
-Ukážka funkcionality SDK je na obrázku \ref{pic-realsensedis}.
+Ukážka funkcionality SDK je na obr. \ref{pic-realsensedis}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -263,7 +265,7 @@ Toto SDK bolo nahradené novým multiplatformovým SDK \cite{realsensenew}, ktor
 OpenCV \cite{openCv} (Open Source Computer Vision Library) je multiplatformová knižnica zameraná na počítačové videnie.
 V knižnici OpenCV je implementovaná detekcia tvárí a aj detekcia bodov na tvári z článku \cite{kazemi2014one}. 
 Prečo nepoužijeme knižnicu OpenCV si popíšeme v kapitole \ref{OpenCVvsDlibNadpis}. 
-Ukážku detekcie je možné vidieť na obrázku \ref{pic-openCv}. 
+Ukážku detekcie je možné vidieť na obr. \ref{pic-openCv}. 
 
 \begin{figure}[H]
 	\begin{center}
@@ -277,7 +279,7 @@ Ukážku detekcie je možné vidieť na obrázku \ref{pic-openCv}.
 \subsection{Knižnica Dlib} \label{DlibNadpis}
 Dlib\cite{dlib} je moderná multiplatformová knižnica obsahujúca nástroje pre strojové učenie a vytváranie komplexného softvéru v jakyku C++. 
 Ako sme spomínali v pred\-chá\-dza\-jú\-cej podsekcii v knižnici Dlib je implementovaná detekcia bodov na tvári z článoku \cite{kazemi2014one}. 
-Ukážka detekcie bodov na tvári pomocou knižnice Dlib je na obrázku \ref{pic-dlibUkazka}.
+Ukážka detekcie bodov na tvári pomocou knižnice Dlib je na obr. \ref{pic-dlibUkazka}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -360,7 +362,7 @@ Pre naše potreby je najvhodnejšia metóda detekcie tváre pomocou HoG implemen
 Táto metóda nie je najpresnejšia, ale keďže chceme rozpoznávať reč pri videohovore, môžeme predpokladať, že vo väčšine prípadov sa osoba pred kamerou bude pozerať priamo na kameru (monitor) a tvár  nebude mať ničím zakrytú.
 To, že metóda má problém s malými tvárami tiež pre nás nie je problém, lebo pri videohovore predpokladáme, že tvár nebude ďaleko od kamery.
 Zo spomínaných metód je jednoduchá, nenáročná a na CPU najrýchlejšia, čo je veľmi dobré, lebo kladieme veľký dôraz na to, aby naše riešenie fungovalo v reálnom čase.
-Porovnanie rýchlosti jednotlivých metód je uvedené na obrázku \ref{pic-face-detection-speed-comparison}.
+Porovnanie rýchlosti jednotlivých metód je uvedené na obr. \ref{pic-face-detection-speed-comparison}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -379,7 +381,7 @@ Pri detekcii využívajú 3 rozdielne vlastnosti pre každú zvukovú snímku: e
 Pre každú z týchto vlastností sa zvolí prah a pre každú zvukovú snímku sa rátajú tieto 3 vlastnosti.
 Ak hodnota ktorejkoľvek vlastnosti bude väčšia ako prah prehlási sa aktuálna zvuková snímka za snímku s rečou.
 Prahy sa dynamicky menia počas behu algoritmu vzhľadom na predchádzajúce zvukové snímky.
-Ukážka vypočítaných vlastností na zvukovom súbore pomocou algoritmu z \cite{moattar2009simple} je na obrázku \ref{pic-avad}.
+Ukážka vypočítaných vlastností na zvukovom súbore pomocou algoritmu z \cite{moattar2009simple} je na obr. \ref{pic-avad}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -455,11 +457,11 @@ Ak sa našla práve jedna tvár, prebieha detekcia bodov na tvári v pôvodnej s
 Detekcia bodov na tvári je detailne popísaná v časti \ref{detekciaBodov}.
 Nájdené body na tvári spracúva metóda \texttt{ComputeDifferenceBetweenRatios}, ktorá je popísaná v časti \ref{pomerPier}.
 Nakoniec už len metóda \texttt{CheckSpeechInLastFrames}, vysvetlená v časti  \ref{kontrolaReci}, skontroluje, či nastala reč a podľa toho sa vytvorí objekt triedy \texttt{Output}, ktorý sa dáva na výstup. 
-Detailný popis metódy \texttt{Frame} je na obrázku \ref{pic-Frame}.
+Detailný popis metódy \texttt{Frame} je na obr. \ref{pic-Frame}.
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[height=8.7cm]{pics/Frame.jpg}
+		\includegraphics[height=23cm]{pics/Frame.jpg}
 		\caption{Graf priebehu metódy \texttt{Frame}. Vo vrcholoch sú akcie, ktoré sa vykonávajú, šípky znázorňujú výstupy z akcií.}
 		\label{pic-Frame}
 	\end{center}
@@ -477,7 +479,16 @@ Pozície tvárí sa po nájdení preškálujú tak, aby boli na správnych miest
 
 \subsubsection{Detekcia bodov na tvári}\label{detekciaBodov}
 Pre detekciu bodov na tvári budeme potrebovať natrénovaný model. 
-V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely, ktoré detegujú 68 alebo 5 bodov na tvári. 
+V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely, ktoré detegujú 68 (obr. \ref{pic-detekciaKsicht}) alebo 5 bodov na tvári. 
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=6cm]{pics/detekciaKsicht.png}
+		\caption{Ukážka detekcie modelu so 68 bodmi v reálnom čase pomocou knižnice Dlib.}
+		\label{pic-detekciaKsicht}
+	\end{center}
+\end{figure}
+
 Model so 68 bodmi má približne 95MiB, čo je príliš veľa a model s 5 bodmi zas neobsahuje body na perách.
 Rozhodli sme sa teda vytvoriť vlastný model, ktorý by mal menšiu veľkosť a bol dostatočne presný pre naše potreby.
 Pre trénovanie modelu budeme potrebovať fotografie osôb a k nim súbor s popisom umiestnenia bodov na tvárach (súbory sú štandardne formátu xml, budeme ich preto skrátene nazývať xml súbory).
@@ -488,32 +499,25 @@ Pomocou uvedených súborov však nie je možné natrénovať dostatočne presn�
 Na stránke knižnice Dlib sa dá nájsť dátová sada ibug\_300W\_large\_face\_landmark\_dataset, čo je vlastne dátová sada 300-W \cite{ibug} s pridanými zrkadlovo otočenými obrázkami (pri použití dátovej sady  300-W \cite{ibug} žiadajú citovať \cite{sagonas2016300}, \cite{sagonas2013300} a \cite{sagonas2013semi}) 
 Dátová sada  300-W \cite{ibug} obsahuje fotografie z dátových sád afw, helen, ibug a lfpw. 
 Dátová sada samozrejme obsahovala aj testovaci a trénovací xml súbor s označenými umiestneniami 68 bodov na tvári, pomocou ktorých je možné natrénovať presnejší model.
-Trénovací súbor obsahoval 6 666 tvári a testovací obsahoval 1008 tvári.
+Trénovací súbor obsahoval 6 666 tvári a testovací obsahoval 1 008 tvári.
 Knižnica Dlib obsahuje nástroj na vytváranie a úpravu xml súborov s informáciami o bodoch na tvárach na fotografiách a aj nástroj na trénovanie a testovanie modelu na základe fotografií a xml súborov.
 Pomocou nástroja na prácu s xml súbormi z knižnice Dlib a editora Sublime Text sme upravili počet bodov na tvári v xml súboroch.
-Nástroj na trénovanie má možnosť nastaviť parametre trénovania, ako je napríklad hĺbka stromu a. i. 
-%dopis vela veci
-Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
-\begin{itemize}
-	\item 20 bodový model pier. 
-	Ponechali sme len body na perách. 
-	Model ale nebol dostatočne presný.
-	\item 27 bodový model pier.
-	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
-	Ani tento model nebol dostatočne presný.
-\end{itemize}
-
-Keďže sa nám zatiaľ nepodarilo vytvoriť vhodnejší model používali sme 68 bodový model.
-(Stale sa snazim vytvorit lepsi model)
-Ukážka detekcie modelu so 68 bodmi v obraze z webovej kamery je na obrázku \ref{pic-detekciaKsicht}.
-
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[height=6cm]{pics/detekciaKsicht.png}
-		\caption{Ukážka detekcie modelu so 68 bodmi v reálnom čase pomocou knižnice Dlib.}
-		\label{pic-detekciaKsicht}
-	\end{center}
-\end{figure}
+Nástroj na trénovanie má možnosť nastaviť parametre trénovania:
+ \begin{itemize}
+\item \_cascade\_depth - hĺbka kaskády,
+\item \_tree\_depth - hĺbka stromu, 
+\item \_num\_trees\_per\_cascade\_level - hĺbka stromov v úrovni kaskády, 
+\item \_nu - regularizačný parameter, 
+\item \_oversampling\_amount - množstvo prevzorkovaní, 
+\item \_oversampling\_translation\_jitter - posun prevzorkovania,
+\item \_feature\_pool\_size - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
+\item \_lambda - 
+\item \_num\_test\_splits - 
+\item \_feature\_pool\_region\_padding - 
+\item \_verbose - pravdivostná premenná, ktorá ak platí, tak program bude pri trénovaní vypisovať v akom je stave, inak nebude, 
+\item \_num\_threads - počet jadier, ktoré sa používajú pri trénovaní, 
+\item \_padding\_mode - 
+\end{itemize} 
 
 Uložený natrénovaný model sa načíta pri volaní konštruktora triedy \texttt{VVAD}.
 Vytvorí sa objekt triedy \texttt{shape\_predictor} z knižnice Dlib, ktorého metóda na detekciu bodov na tvári sa volá po zdetegovaní tváre.
@@ -528,11 +532,11 @@ Z dvadsiatich bodov na perách sa najprv zrátajú pozície bodov z ktorých sa 
 \item pravý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví priemer,
 \item ľavý - zoberú sa 2 body v hornej časti pery, z ktorých sa spraví priemer.
 \end{itemize} 
-Ukážku popísaných bodov je možné vidieť na obrázku \ref{pic-bodyPomeru}.
+Ukážku popísaných bodov je možné vidieť na obr. \ref{pic-bodyPomeru}.
 Z pravého a ľavého bodu sa vyráta šírka pier a z horného a dolného bodu výška.
 Následne sa vypočíta pomer výšky a šírky a zráta sa absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky. 
 Pomocou metódy \texttt{ShiftAndAddRatioDifference} sa vypočítaná absolútna hodnota uloží do 10 prvkového posuvného poľa.
-Ako toto desať prvkové pole funguje, je vysvetlené na obrázku \ref{pic-vysvetleniePosuvnehoPola}.
+Ako toto desať prvkové pole funguje, je vysvetlené na obr. \ref{pic-vysvetleniePosuvnehoPola}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -575,7 +579,7 @@ Počas týchto desiatich sekúnd musí používateľ neustále priamo pozerať d
 Takto počas desiatich sekúnd ukladá metóda  \texttt{Frame\-For\-Learning\-Threshold} vypočítané pomery do poľa 200 posledných pomerov.
 Hneď ako sa pole zaplní sa zavolá metóda \texttt{FindThreshold}, ktorá tieto hodnoty usporiada podľa veľkosti a ako nájdený prah vráti dvanástu najväčšiu hodnotu.
 Hodnota dvanásť bola zvolená pri testovaní ako najvhodnejšia.
-Príklad takto určeného prahu je na obrázku \ref{pic-kalibraciaUsporiadane}.
+Príklad takto určeného prahu je na obr. \ref{pic-kalibraciaUsporiadane}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -587,11 +591,11 @@ Príklad takto určeného prahu je na obrázku \ref{pic-kalibraciaUsporiadane}.
 
 Keď máme určený prah, metóda \texttt{FrameForLearningThreshold} vráti pravdivostnú hodnotu pravda a tým sa určovanie ukončí a programátor, ktorý bude používať knižnicu VVAD bude vedieť, že prah je nastavený.
 Vo všetkých predchádzajúcich volaniach vracia metóda \texttt{FrameForLearningThreshold} pravdivostnú hodnotu nepravda.
-Detailný popis metódy \texttt{FrameForLearningThreshold} je na obrázku \ref{pic-FrameForLearningThreshold}.
+Detailný popis metódy \texttt{FrameForLearningThreshold} je na obr. \ref{pic-FrameForLearningThreshold}.
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[height=10.3cm]{pics/FrameForLearningThreshold.jpg}
+		\includegraphics[height=23cm]{pics/FrameForLearningThreshold.jpg}
 		\caption{Graf priebehu metódy \texttt{FrameForLearningThreshold}. Vo vrcholoch sú akcie ktoré sa vykonávajú, šípky znázorňujú výstupy z akcií.}
 		\label{pic-FrameForLearningThreshold}
 	\end{center}
@@ -600,9 +604,24 @@ Detailný popis metódy \texttt{FrameForLearningThreshold} je na obrázku \ref{p
 Rovnako ako v metóde \texttt{Frame} je možné volať metódu \texttt{FrameForLearningThreshold} ľubovoľný počet krát za sekundu, opäť však minimálne dvadsať krát a metóda spracúvava rovnakým spôsobom každú snímku, ktorá prišla po 50 ms od predchádzajúcej spracovanej snímky.
 
 \section{Implementácia AVAD}
-Pri implementovaní AVAD sme používali knižnicu SFML \cite{SFML}.
-Pracuje sa na tom\ldots buduci tyzden\ldots
+S použitím knižnice SFML \cite{SFML} sa nám čiastočne podarilo implementovať algoritmus z práce  \cite{moattar2009simple}. 
+Kvôli problémom s implementáciou, kvôli zložitosti výsledného riešenia a kvôli problémom so spojením VVAD a AVAD sme sa rozhodli AVAD do nášho riešenia neimplementovať.
 
 \chapter{Testovanie}
+Implementovanú knižnicu VVAD sme nakoniec podrobili testovaniu.
+Museli sme navrhnúť metodiku testovania a spôsob vyhodnocovania. 
 
-Tento týždeň na tom budem pracovať.
+\section{Metodika testovania}
+Knižnica VVAD sa skladá z dvoch hlavných metód: \texttt{Frame} a \texttt{FrameForLearningThreshold}. 
+\texttt{FrameForLearningThreshold} určí prah, podľa ktorého následne \texttt{Frame} určuje, či prebieha reč alebo nie.
+Potrebujeme teda sekvencie videa, v ktorých najprv ...
+
+Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
+\begin{itemize}
+	\item 20 bodový model pier. 
+	Ponechali sme len body na perách. 
+	Model ale nebol dostatočne presný.
+	\item 27 bodový model pier.
+	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
+	Ani tento model nebol dostatočne presný.
+\end{itemize}

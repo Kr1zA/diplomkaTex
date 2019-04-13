@@ -416,7 +416,7 @@ V tejto kapitole popíšeme implementáciu nami navrhnutého riešenia VAD v C++
 
 \section{Použitý hardware a software}
 Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM) a na počítači HP Z240 (Intel Xeon E3-1245, 16GB ram)
-Pre testovanie sme používali webovú kameru LifeCam Cinema.
+Pre testovanie sme používali webovú kameru LifeCam Cinema a mobilný telefón Xiaomi Pocophone F1.
 Vyvíjali sme jazyku C++, ktorý je najvhodnejší pre prácu s videom.
 Používali sme knižnice OpenCV, Dlib, SFML.
 Ako vývojárske prostredie bol zvolený CLion a buildovali sme pomocou Cmake.
@@ -502,24 +502,9 @@ Dátová sada samozrejme obsahovala aj testovaci a trénovací xml súbor s ozna
 Trénovací súbor obsahoval 6 666 tvári a testovací obsahoval 1 008 tvári.
 Knižnica Dlib obsahuje nástroj na vytváranie a úpravu xml súborov s informáciami o bodoch na tvárach na fotografiách a aj nástroj na trénovanie a testovanie modelu na základe fotografií a xml súborov.
 Pomocou nástroja na prácu s xml súbormi z knižnice Dlib a editora Sublime Text sme upravili počet bodov na tvári v xml súboroch.
-Nástroj na trénovanie má možnosť nastaviť parametre trénovania:
- \begin{itemize}
-\item \_cascade\_depth - hĺbka kaskády,
-\item \_tree\_depth - hĺbka stromu, 
-\item \_num\_trees\_per\_cascade\_level - hĺbka stromov v úrovni kaskády, 
-\item \_nu - regularizačný parameter, 
-\item \_oversampling\_amount - množstvo prevzorkovaní, 
-\item \_oversampling\_translation\_jitter - posun prevzorkovania,
-\item \_feature\_pool\_size - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
-\item \_lambda - 
-\item \_num\_test\_splits - 
-\item \_feature\_pool\_region\_padding - 
-\item \_verbose - pravdivostná premenná, ktorá ak platí, tak program bude pri trénovaní vypisovať v akom je stave, inak nebude, 
-\item \_num\_threads - počet jadier, ktoré sa používajú pri trénovaní, 
-\item \_padding\_mode - 
-\end{itemize} 
-
-Uložený natrénovaný model sa načíta pri volaní konštruktora triedy \texttt{VVAD}.
+Nástroj na trénovanie má možnosť nastaviť parametre trénovania.
+Niektoré z nich bližsie popíšeme v časti \ref{testovanieModelu}, kde je popísaný návrh a testovanie modelov.
+Model, ktorý natrénujeme sa uloží do súboru a následne sa načíta pri volaní konštruktora triedy \texttt{VVAD}.
 Vytvorí sa objekt triedy \texttt{shape\_predictor} z knižnice Dlib, ktorého metóda na detekciu bodov na tvári sa volá po zdetegovaní tváre.
 Metóda dostane na vstup pôvodnú snímku a pozíciu zdetegovanej tváre a na výstup vráti objekt triedy \texttt{full\_object\_detection}, ktorý obsahuje pozíciu tváre a vektor bodov na tvári.
 
@@ -601,7 +586,7 @@ Detailný popis metódy \texttt{FrameForLearningThreshold} je na obr. \ref{pic-F
 	\end{center}
 \end{figure}
 
-Rovnako ako v metóde \texttt{Frame} je možné volať metódu \texttt{FrameForLearningThreshold} ľubovoľný počet krát za sekundu, opäť však minimálne dvadsať krát a metóda spracúvava rovnakým spôsobom každú snímku, ktorá prišla po 50 ms od predchádzajúcej spracovanej snímky.
+Rovnako ako v metóde \texttt{Frame} je možné volať metódu \texttt{Frame\-For\-Learning\-Threshold} ľubovoľný počet krát za sekundu, opäť však minimálne dvadsať krát a metóda spracúvava rovnakým spôsobom každú snímku, ktorá prišla po 50 ms od predchádzajúcej spracovanej snímky.
 
 \section{Implementácia AVAD}
 S použitím knižnice SFML \cite{SFML} sa nám čiastočne podarilo implementovať algoritmus z práce  \cite{moattar2009simple}. 
@@ -610,18 +595,54 @@ Kvôli problémom s implementáciou, kvôli zložitosti výsledného riešenia a
 \chapter{Testovanie}
 Implementovanú knižnicu VVAD sme nakoniec podrobili testovaniu.
 Museli sme navrhnúť metodiku testovania a spôsob vyhodnocovania. 
+Natočili sme niekoľko trénovacích a testovacích videí a na nich sme vyhodnotili funkčnosť implementácie. 
 
 \section{Metodika testovania}
-Knižnica VVAD sa skladá z dvoch hlavných metód: \texttt{Frame} a \texttt{FrameForLearningThreshold}. 
-\texttt{FrameForLearningThreshold} určí prah, podľa ktorého následne \texttt{Frame} určuje, či prebieha reč alebo nie.
-Potrebujeme teda sekvencie videa, v ktorých najprv ...
+Knižnica VVAD sa skladá z dvoch hlavných metód: \texttt{Frame} a \texttt{Frame\-For\-Learning\-Threshold}. 
+\texttt{Frame\-For\-Learning\-Threshold} určí prah, podľa ktorého následne \texttt{Frame} určuje, či prebieha reč alebo nie.
+Na to, aby sme otestovali funkčnosť týchto metód sme natočili niekoľko dvojíc sekvecijí trénovacích a testovacích videí. 
+Poprosili sme niekoľko kolegov o nahranie týchto videí, kde v trénovacom videu, ktoré malo dĺžku viac ako 10 sekúnd, mali povedať vetu \uv{Toto je trénovacie video.} a okrem toho mať ústa zatvorené a nehýbať nimi.
+V testovacom videu, ktoré malo ľubovoľnú dĺžku, mali povedať dve vety. Prvá veta bola \uv{Poďme vyskúšať, či je dobrý theshold.}, kďe za čiarkou mali urobiť v reči vačšiu pauzu. 
+Druhá veta bola \uv{Toto bolo testovacie video.}. 
+Aj medzi týmito dvoma vetami mali spraviť väčšiu pauzu. 
+Dôvodom týchto paúz bolo vyčlenenie úsekov vo videu s rečou a bez reči.
 
+Testovacie video bolo použité na určenie prahu pomocou metódy \texttt{Frame} a prah bol následne použitý v metóde Frame na určenie, či prebieha alebo neprebieha reč v prislúchajúcom testovacom videu. 
+Na jednotlivých testovacích videách určíme časy, kedy prebieha a neprebieha reč a budeme ich porovnávať s výstupom metódy \texttt{Frame}.
+
+Keďže sme sa rozhodli vytvoriť vlastný model pre hľadanie boodv na tvári, je potrebné najprv overiť jeho presnosť, čo urobíme v nasledujúcej kapitole. 
+
+
+\section{Testovanie natrénovaného modelu}\label{testovanieModelu}
 Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
 \begin{itemize}
 	\item 20 bodový model pier. 
 	Ponechali sme len body na perách. 
-	Model ale nebol dostatočne presný.
+	Už prvé pokusy natrénovať takýto model ukázali, že nie je vhodný.
+	Dosť často sa stávalo, že model našiel pery v oblasti brady alebo medri bradou a perami.
+	Dôvodom je podobnosť týchto oblastí s perami. Ukážka chybovosti modelu je na obr. 
 	\item 27 bodový model pier.
 	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
-	Ani tento model nebol dostatočne presný.
+	Skúšali sme rôzne parametre trénovania. 
+	Vačšina natrénovaných modelov bola stále nepresná, ústa boli užšie ako mali byť a podobne.
+	Nakoniec sa podarilo nájsť parametre, s ktorými vyzeral byť natrénovaný model dostatočne presný.
+	Nasledovné testovanie ale ukázalo, že vhodnejšie bude použiť pôvodný model z knižnice Dlib.
 \end{itemize}
+
+ \begin{itemize}
+\item \_cascade\_depth - hĺbka kaskády,
+\item \_tree\_depth - hĺbka stromu, 
+\item \_num\_trees\_per\_cascade\_level - hĺbka stromov v úrovni kaskády, 
+\item \_nu - regularizačný parameter, 
+\item \_oversampling\_amount - množstvo prevzorkovaní, 
+\item \_oversampling\_translation\_jitter - posun prevzorkovania,
+\item \_feature\_pool\_size - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
+\item \_lambda - 
+\item \_num\_test\_splits - 
+\item \_feature\_pool\_region\_padding - 
+\item \_verbose - pravdivostná premenná, ktorá ak platí, tak program bude pri trénovaní vypisovať v akom je stave, inak nebude, 
+\item \_num\_threads - počet jadier, ktoré sa používajú pri trénovaní, 
+\item \_padding\_mode - 
+\end{itemize} 
+\section{Testovanie videí}
+Videá boli natáčané mobilným telefónom Xiaomi Pocophone F1 v rozlíšení 1280x720 pixelov pri 30 dnímkach za sekundu. 

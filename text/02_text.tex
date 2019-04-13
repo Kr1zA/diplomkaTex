@@ -479,7 +479,16 @@ Pozície tvárí sa po nájdení preškálujú tak, aby boli na správnych miest
 
 \subsubsection{Detekcia bodov na tvári}\label{detekciaBodov}
 Pre detekciu bodov na tvári budeme potrebovať natrénovaný model. 
-V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely, ktoré detegujú 68 alebo 5 bodov na tvári. 
+V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely, ktoré detegujú 68 (obr. \ref{pic-detekciaKsicht}) alebo 5 bodov na tvári. 
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=6cm]{pics/detekciaKsicht.png}
+		\caption{Ukážka detekcie modelu so 68 bodmi v reálnom čase pomocou knižnice Dlib.}
+		\label{pic-detekciaKsicht}
+	\end{center}
+\end{figure}
+
 Model so 68 bodmi má približne 95MiB, čo je príliš veľa a model s 5 bodmi zas neobsahuje body na perách.
 Rozhodli sme sa teda vytvoriť vlastný model, ktorý by mal menšiu veľkosť a bol dostatočne presný pre naše potreby.
 Pre trénovanie modelu budeme potrebovať fotografie osôb a k nim súbor s popisom umiestnenia bodov na tvárach (súbory sú štandardne formátu xml, budeme ich preto skrátene nazývať xml súbory).
@@ -490,32 +499,25 @@ Pomocou uvedených súborov však nie je možné natrénovať dostatočne presn�
 Na stránke knižnice Dlib sa dá nájsť dátová sada ibug\_300W\_large\_face\_landmark\_dataset, čo je vlastne dátová sada 300-W \cite{ibug} s pridanými zrkadlovo otočenými obrázkami (pri použití dátovej sady  300-W \cite{ibug} žiadajú citovať \cite{sagonas2016300}, \cite{sagonas2013300} a \cite{sagonas2013semi}) 
 Dátová sada  300-W \cite{ibug} obsahuje fotografie z dátových sád afw, helen, ibug a lfpw. 
 Dátová sada samozrejme obsahovala aj testovaci a trénovací xml súbor s označenými umiestneniami 68 bodov na tvári, pomocou ktorých je možné natrénovať presnejší model.
-Trénovací súbor obsahoval 6 666 tvári a testovací obsahoval 1008 tvári.
+Trénovací súbor obsahoval 6 666 tvári a testovací obsahoval 1 008 tvári.
 Knižnica Dlib obsahuje nástroj na vytváranie a úpravu xml súborov s informáciami o bodoch na tvárach na fotografiách a aj nástroj na trénovanie a testovanie modelu na základe fotografií a xml súborov.
 Pomocou nástroja na prácu s xml súbormi z knižnice Dlib a editora Sublime Text sme upravili počet bodov na tvári v xml súboroch.
-Nástroj na trénovanie má možnosť nastaviť parametre trénovania, ako je napríklad hĺbka stromu a. i. 
-%dopis vela veci
-Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
-\begin{itemize}
-	\item 20 bodový model pier. 
-	Ponechali sme len body na perách. 
-	Model ale nebol dostatočne presný.
-	\item 27 bodový model pier.
-	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
-	Ani tento model nebol dostatočne presný.
-\end{itemize}
-
-Keďže sa nám zatiaľ nepodarilo vytvoriť vhodnejší model používali sme 68 bodový model.
-(Stale sa snazim vytvorit lepsi model)
-Ukážka detekcie modelu so 68 bodmi v obraze z webovej kamery je na obr. \ref{pic-detekciaKsicht}.
-
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[height=6cm]{pics/detekciaKsicht.png}
-		\caption{Ukážka detekcie modelu so 68 bodmi v reálnom čase pomocou knižnice Dlib.}
-		\label{pic-detekciaKsicht}
-	\end{center}
-\end{figure}
+Nástroj na trénovanie má možnosť nastaviť parametre trénovania:
+ \begin{itemize}
+\item \_cascade\_depth - hĺbka kaskády,
+\item \_tree\_depth - hĺbka stromu, 
+\item \_num\_trees\_per\_cascade\_level - hĺbka stromov v úrovni kaskády, 
+\item \_nu - regularizačný parameter, 
+\item \_oversampling\_amount - množstvo prevzorkovaní, 
+\item \_oversampling\_translation\_jitter - posun prevzorkovania,
+\item \_feature\_pool\_size - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
+\item \_lambda - 
+\item \_num\_test\_splits - 
+\item \_feature\_pool\_region\_padding - 
+\item \_verbose - pravdivostná premenná, ktorá ak platí, tak program bude pri trénovaní vypisovať v akom je stave, inak nebude, 
+\item \_num\_threads - počet jadier, ktoré sa používajú pri trénovaní, 
+\item \_padding\_mode - 
+\end{itemize} 
 
 Uložený natrénovaný model sa načíta pri volaní konštruktora triedy \texttt{VVAD}.
 Vytvorí sa objekt triedy \texttt{shape\_predictor} z knižnice Dlib, ktorého metóda na detekciu bodov na tvári sa volá po zdetegovaní tváre.
@@ -613,3 +615,13 @@ Museli sme navrhnúť metodiku testovania a spôsob vyhodnocovania.
 Knižnica VVAD sa skladá z dvoch hlavných metód: \texttt{Frame} a \texttt{FrameForLearningThreshold}. 
 \texttt{FrameForLearningThreshold} určí prah, podľa ktorého následne \texttt{Frame} určuje, či prebieha reč alebo nie.
 Potrebujeme teda sekvencie videa, v ktorých najprv ...
+
+Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
+\begin{itemize}
+	\item 20 bodový model pier. 
+	Ponechali sme len body na perách. 
+	Model ale nebol dostatočne presný.
+	\item 27 bodový model pier.
+	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
+	Ani tento model nebol dostatočne presný.
+\end{itemize}

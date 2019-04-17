@@ -1,3 +1,14 @@
 \chapter*{Záver}
 \addcontentsline{toc}{chapter}{Záver}  %pridanie nadpisu do obsahu
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat velit non lorem pretium, in cursus eros pharetra. Nunc tristique tortor a lobortis vulputate. Quisque elementum erat eget congue commodo. Sed faucibus cursus urna, at rutrum dolor aliquam ac. Etiam posuere est in efficitur sagittis. Cras efficitur a purus eu auctor. Ut risus dui, interdum non scelerisque ut, dictum vel quam. Pellentesque ipsum libero, luctus nec dapibus sit amet, pretium in augue. Aenean imperdiet in libero non feugiat. Donec vitae mi non nunc ullamcorper ornare. Phasellus maximus sagittis porta. Sed gravida bibendum rutrum. Donec augue eros, elementum mollis efficitur vel, pretium sed urna. Aenean a libero laoreet, fringilla lacus ac, finibus dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+V práci sme sa zaoberali prvkami HCI, popísali sme ich históriu a aktuálne možnosti.
+Zameriavame sa na detekciu reči a hľadali možnosti využitia tejto detekcia na automatické vypínanie a zapínanie mikrofónu pri videokonferenčnom hovore.
+Vytvorili sme prehľad existujúcich riešení v nastolenej problematike.
+Na základe naštudovanej literatúry sme navrhli a implementovali dynamickú C++ knižnicu VVAD, ktorú je možné použiť na detekciu tvárí v obraze kamery a na detekciu reči u osoby pred kamerou.
+Nakoniec sme knižnicu otestovali a ukazuje sa ako reálne použiteľná. 
+Do budúcna je možné:
+\begin{itemize}
+\item vylepšiť detekciu reči pomocou detekcie zo zvuku,
+\item urobiť knižnicu viac modulárnou - rozdeliť ju na viac knižníc, kde jedna by detegovala tváre, ďalšia reč a podobne, 
+\item nájsť rýchlejšiu a presnejšiu možnosť detekcie tvárí,
+\item vytvoriť presnejší model detekcie bodov na tvári, \ldots
+\end{itemize}

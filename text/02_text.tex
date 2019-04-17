@@ -415,11 +415,13 @@ Napríklad v prípade nedetegovania tváre sa môže znížiť kvalita prenáša
 V tejto kapitole popíšeme implementáciu nami navrhnutého riešenia VAD v C++ knižnici.
 
 \section{Použitý hardware a software}
-Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM) a na počítači HP Z240 (Intel Xeon E3-1245, 16GB ram)
+Implementácia a testovanie prebiehali na notebooku Asus Zenbook UX305FA (Intel Core M 5Y10, 8GB RAM) a na počítači HP Z240 (Intel Xeon E3-1245, 16GB ram).
 Pre testovanie sme používali webovú kameru LifeCam Cinema a mobilný telefón Xiaomi Pocophone F1.
 Vyvíjali sme jazyku C++, ktorý je najvhodnejší pre prácu s videom.
 Používali sme knižnice OpenCV, Dlib, SFML.
+Knižnica Dlib je závislá na knižnici OpenCV, ktorú sme používali vo verzií 3.4.5.
 Ako vývojárske prostredie bol zvolený CLion a buildovali sme pomocou Cmake.
+Kvôli zvýšeniu rýchlosti kompilujeme naprogramované zdrojové súbory so zapnutou optimalizáciou AVX, ktorá je podporovaná na procesoroch od roku 2011.
 
 \section{Implementácia VVAD}
 Vytvorili sme dynamickú knižnicu s názvom VVAD. 
@@ -428,7 +430,7 @@ V hlavičkovom súbore sú definované dve triedy: \texttt{VVAD} a  \texttt{Outp
 Trieda \texttt{VVAD} je hlavnou triedou, ktorá obsahuje verejne metódy:
 \begin{itemize}
 \item \texttt{Frame} - hlavná metóda, ktorej vstupom je video snímka a výstupom je objekt triedy \texttt{Output}.
-\item \texttt{FrameForLearningThreshold} - metóda sa volá na začiatku používania knižnice na určenie prahu. Vstupom metódy je video snímka a výsledným výstupom je prah, pomocou ktorého metóda \texttt{Frame} vyhodnocuje, či vo videosekvencii nastala reč alebo nie.
+\item \texttt{Frame\-For\-Learning\-Threshold}- metóda sa volá na začiatku používania knižnice na určenie prahu. Vstupom metódy je video snímka a výsledným výstupom je prah, pomocou ktorého metóda \texttt{Frame} vyhodnocuje, či vo videosekvencii nastala reč alebo nie.
 \item \texttt{SaveThreshodToFile} - metóda uloží prah do súboru určeného reťazcom, ktorý dostane na vstup.
 \item \texttt{LoadThresholdFromFile} -  metóda načíta prah zo súboru určeného reťazcom, ktorý dostane na vstup.
 \item \texttt{getThreshold} - vráti hodnotu prahu.
@@ -448,7 +450,7 @@ V nasledujúcej časti popíšeme fungovanie niektorých metód detailne.
 
 \subsection{Metóda \texttt{Frame}}
 Zo snímky, ktorú dostane metóda \texttt{Frame} na vstupe sa vytvorí kópia, ktorá sa predspracuje.
-Predspracovanie spočíva v zmene rozlíšenia tak, aby šírka snímky bola  720 pixelov (toto predspracovanie budeme nazývať preškálovanie).
+Predspracovanie spočíva v zmene rozlíšenia tak, aby šírka snímky bola  400 pixelov (toto predspracovanie budeme nazývať preškálovanie).
 Rozlíšenie bolo zvolené tak, aby nasledujúca detekcia tváre v snímke bola dostatočne rýchla aj na menej výkonných procesoroch.
 Detekcia tváre je presnejšie popísaná v časti \ref{detekciaTvare}.
 Výstupom z detekcie tváre je pole pozícií nájdených tvárí v kopijí pôvodnej snímky. 
@@ -504,6 +506,7 @@ Knižnica Dlib obsahuje nástroj na vytváranie a úpravu xml súborov s inform�
 Pomocou nástroja na prácu s xml súbormi z knižnice Dlib a editora Sublime Text sme upravili počet bodov na tvári v xml súboroch.
 Nástroj na trénovanie má možnosť nastaviť parametre trénovania.
 Niektoré z nich bližsie popíšeme v časti \ref{testovanieModelu}, kde je popísaný návrh a testovanie modelov.
+
 Model, ktorý natrénujeme sa uloží do súboru a následne sa načíta pri volaní konštruktora triedy \texttt{VVAD}.
 Vytvorí sa objekt triedy \texttt{shape\_predictor} z knižnice Dlib, ktorého metóda na detekciu bodov na tvári sa volá po zdetegovaní tváre.
 Metóda dostane na vstup pôvodnú snímku a pozíciu zdetegovanej tváre a na výstup vráti objekt triedy \texttt{full\_object\_detection}, ktorý obsahuje pozíciu tváre a vektor bodov na tvári.
@@ -555,11 +558,11 @@ Výsledný efekt je ale opačný.
 Ak by sa reč vyhodnocovala iba z aktuálnej snímky, respektíve rozdielu dvoch snímok, výstup programu by priveľmi skákal medzi zdetegovanou a nezdetegovanou rečou.
 Naše riešenie teda spôsobuje, že výstup programu je hladší a v prípade reči hneď korektne zareaguje.
 
-\subsection{Metóda \texttt{FrameForLearningThreshold}}
+\subsection{Metóda \texttt{Frame\-For\-Learning\-Threshold}}
 Pred začatím používanie detekcie reči je potrebné určiť prah, ktorý sa používa v metóde  \texttt{Frame}. 
 Keďže každý človek ma ústa trocha iného tvaru, každý bude potrebovať iný prah.
 Vymysleli sme poloautomatickú metódu určenia prahu, ktorá je účinná a používateľsky prívetivá.
-Pred začatím používania metódy \texttt{Frame} je potrebné posielať približne desať sekúnd snímky metóde  \texttt{FrameForLearningThreshold}, ktorá určí prah. 
+Pred začatím používania metódy \texttt{Frame} je potrebné posielať približne desať sekúnd snímky metóde  \texttt{Frame\-For\-Learning\-Threshold}, ktorá určí prah. 
 Počas týchto desiatich sekúnd musí používateľ neustále priamo pozerať do kamery a kedykoľvek povedať vetu: \uv{Toto je trénovacie video.} a okrem tejto vety nepohybovať perami.
 Takto počas desiatich sekúnd ukladá metóda  \texttt{Frame\-For\-Learning\-Threshold} vypočítané pomery do poľa 200 posledných pomerov.
 Hneď ako sa pole zaplní sa zavolá metóda \texttt{FindThreshold}, ktorá tieto hodnoty usporiada podľa veľkosti a ako nájdený prah vráti dvanástu najväčšiu hodnotu.
@@ -568,20 +571,20 @@ Príklad takto určeného prahu je na obr. \ref{pic-kalibraciaUsporiadane}.
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[height=8cm]{pics/kalibraciaUsporiadane.png}
+		\includegraphics[height=8.65cm]{pics/kalibraciaUsporiadane.png}
 		\caption{Graf usporiadaných absolútnych hodnôt pomerov, na základe ktorých sa určuje prah. Dvanásta najväčšia hodnota je vrátená ako prah.}
 		\label{pic-kalibraciaUsporiadane}
 	\end{center}
 \end{figure}
 
-Keď máme určený prah, metóda \texttt{FrameForLearningThreshold} vráti pravdivostnú hodnotu pravda a tým sa určovanie ukončí a programátor, ktorý bude používať knižnicu VVAD bude vedieť, že prah je nastavený.
-Vo všetkých predchádzajúcich volaniach vracia metóda \texttt{FrameForLearningThreshold} pravdivostnú hodnotu nepravda.
-Detailný popis metódy \texttt{FrameForLearningThreshold} je na obr. \ref{pic-FrameForLearningThreshold}.
+Keď máme určený prah, metóda \texttt{Frame\-For\-Learning\-Threshold} vráti pravdivostnú hodnotu pravda a tým sa určovanie ukončí a programátor, ktorý bude používať knižnicu VVAD bude vedieť, že prah je nastavený.
+Vo všetkých predchádzajúcich volaniach vracia metóda \texttt{Frame\-For\-Learning\-Threshold} pravdivostnú hodnotu nepravda.
+Detailný popis metódy \texttt{Frame\-For\-Learning\-Threshold} je na obr. \ref{pic-FrameForLearningThreshold}.
 
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[height=23cm]{pics/FrameForLearningThreshold.jpg}
-		\caption{Graf priebehu metódy \texttt{FrameForLearningThreshold}. Vo vrcholoch sú akcie ktoré sa vykonávajú, šípky znázorňujú výstupy z akcií.}
+		\caption{Graf priebehu metódy \texttt{Frame\-For\-Learning\-Threshold}. Vo vrcholoch sú akcie ktoré sa vykonávajú, šípky znázorňujú výstupy z akcií.}
 		\label{pic-FrameForLearningThreshold}
 	\end{center}
 \end{figure}
@@ -595,22 +598,22 @@ Kvôli problémom s implementáciou, kvôli zložitosti výsledného riešenia a
 \chapter{Testovanie}
 Implementovanú knižnicu VVAD sme nakoniec podrobili testovaniu.
 Museli sme navrhnúť metodiku testovania a spôsob vyhodnocovania. 
-Natočili sme niekoľko trénovacích a testovacích videí a na nich sme vyhodnotili funkčnosť implementácie. 
+Natočili sme niekoľko tré\-no\-va\-cích a testovacích videí a na nich sme vyhodnotili funkčnosť implementácie. 
 
 \section{Metodika testovania}
 Knižnica VVAD sa skladá z dvoch hlavných metód: \texttt{Frame} a \texttt{Frame\-For\-Learning\-Threshold}. 
 \texttt{Frame\-For\-Learning\-Threshold} určí prah, podľa ktorého následne \texttt{Frame} určuje, či prebieha reč alebo nie.
-Na to, aby sme otestovali funkčnosť týchto metód sme natočili niekoľko dvojíc sekvecijí trénovacích a testovacích videí. 
+Na to, aby sme otestovali funkčnosť týchto metód natočili sme dvojice sekvencií trénovacích a testovacích videí. 
 Poprosili sme niekoľko kolegov o nahranie týchto videí, kde v trénovacom videu, ktoré malo dĺžku viac ako 10 sekúnd, mali povedať vetu \uv{Toto je trénovacie video.} a okrem toho mať ústa zatvorené a nehýbať nimi.
-V testovacom videu, ktoré malo ľubovoľnú dĺžku, mali povedať dve vety. Prvá veta bola \uv{Poďme vyskúšať, či je dobrý theshold.}, kďe za čiarkou mali urobiť v reči vačšiu pauzu. 
+V testovacom videu, ktoré malo ľubovoľnú dĺžku, mali povedať dve vety. Prvá veta bola \uv{Poďme vyskúšať, či je dobrý theshold.}, kde za čiarkou mali urobiť v reči väčšiu pauzu. 
 Druhá veta bola \uv{Toto bolo testovacie video.}. 
 Aj medzi týmito dvoma vetami mali spraviť väčšiu pauzu. 
 Dôvodom týchto paúz bolo vyčlenenie úsekov vo videu s rečou a bez reči.
 
-Testovacie video bolo použité na určenie prahu pomocou metódy \texttt{Frame} a prah bol následne použitý v metóde Frame na určenie, či prebieha alebo neprebieha reč v prislúchajúcom testovacom videu. 
+Testovacie video bolo použité na určenie prahu pomocou metódy \texttt{Frame\-For\-Learning\-Threshold} a prah bol následne použitý v metóde Frame na určenie, či prebieha alebo neprebieha reč v prislúchajúcom testovacom videu. 
 Na jednotlivých testovacích videách určíme časy, kedy prebieha a neprebieha reč a budeme ich porovnávať s výstupom metódy \texttt{Frame}.
 
-Keďže sme sa rozhodli vytvoriť vlastný model pre hľadanie boodv na tvári, je potrebné najprv overiť jeho presnosť, čo urobíme v nasledujúcej kapitole. 
+Keďže sme sa rozhodli vytvoriť vlastný model pre hľadanie bodov na tvári, je potrebné najprv overiť jeho presnosť, čo urobíme v nasledujúcej kapitole. 
 
 
 \section{Testovanie natrénovaného modelu}\label{testovanieModelu}
@@ -620,29 +623,54 @@ Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstr�
 	Ponechali sme len body na perách. 
 	Už prvé pokusy natrénovať takýto model ukázali, že nie je vhodný.
 	Dosť často sa stávalo, že model našiel pery v oblasti brady alebo medri bradou a perami.
-	Dôvodom je podobnosť týchto oblastí s perami. Ukážka chybovosti modelu je na obr. 
+	Dôvodom je podobnosť týchto oblastí s perami. Ukážka chybovosti modelu je na obr. X.
 	\item 27 bodový model pier.
 	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
 	Skúšali sme rôzne parametre trénovania. 
 	Vačšina natrénovaných modelov bola stále nepresná, ústa boli užšie ako mali byť a podobne.
 	Nakoniec sa podarilo nájsť parametre, s ktorými vyzeral byť natrénovaný model dostatočne presný.
-	Nasledovné testovanie ale ukázalo, že vhodnejšie bude použiť pôvodný model z knižnice Dlib.
+	Ukážka natrénovaného modelu je na obr. X.
+%	Nasledovné testovanie ale ukázalo, že vhodnejšie bude použiť pôvodný model z knižnice Dlib.
 \end{itemize}
 
+Trénovanie najpresnejšieho modelu trvalo približne 28 hodín na počítači  HP Z240. Uvedieme použité parametre trénovania aj s popisom:
  \begin{itemize}
-\item \_cascade\_depth - hĺbka kaskády,
-\item \_tree\_depth - hĺbka stromu, 
-\item \_num\_trees\_per\_cascade\_level - hĺbka stromov v úrovni kaskády, 
-\item \_nu - regularizačný parameter, 
-\item \_oversampling\_amount - množstvo prevzorkovaní, 
-\item \_oversampling\_translation\_jitter - posun prevzorkovania,
-\item \_feature\_pool\_size - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
-\item \_lambda - 
-\item \_num\_test\_splits - 
-\item \_feature\_pool\_region\_padding - 
+\item \_cascade\_depth = 12 - hĺbka kaskády, 
+\item \_tree\_depth = 3 - hĺbka stromu, 
+\item \_num\_trees\_per\_cascade\_level = 600 - hĺbka stromov v úrovni kaskády, 
+\item \_nu = 0,1 - regularizačný parameter, 
+\item \_oversampling\_amount = 550 - množstvo prevzorkovaní, teda veľkosť trénovacej množiny sa zväčší náhodne zvolenou transformáciou obrázkov z množiny, 
+\item \_feature\_pool\_size = 750 - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
+\item \_lambda = 0,2 - 
+\item \_num\_test\_splits = 300 - 
 \item \_verbose - pravdivostná premenná, ktorá ak platí, tak program bude pri trénovaní vypisovať v akom je stave, inak nebude, 
-\item \_num\_threads - počet jadier, ktoré sa používajú pri trénovaní, 
-\item \_padding\_mode - 
+\item \_num\_threads = 8 - počet vlákien, ktoré sa používajú pri trénovaní, 
 \end{itemize} 
+
+\section{Testovanie bodov na perách}
+V časti \ref{detekciaBodov} sme popísali použitie bodov na perách, z ktorých sa vypočítava pomer výšky a šírky pier. 
+Brali sme priemery vnútorných a vonkajších bodov na perách. 
+Rozhodli sme sa otestovať vhodnosť týchto bodov. 
+Testovanie prebiehalo na pôvodnom 68 bodovom modeli a použili sme testovacie a trénovacie video, na ktorom je natočený autor práce.
+Upravili sme a 3 krát spustili trénovanie a testovanie na týchto dvoch videách s tým, že raz sme brali vonkajšie body na perách (na obr \ref{pic-vysvetleniePosuvnehoPola} horný bod ako priemer bodov 50 a 52, dolný ako priemer bodov 58 a 56, ľavý bod bol bod 48 a pravý 54), druhý raz vnútorné body (na obr \ref{pic-vysvetleniePosuvnehoPola} horný bod ako priemer bodov 61 a 63, dolný ako priemer bodov 67 a 65, ľavý bod bol bod 60 a pravý 64) a tretí raz priemer vnútorných a vonkajších bodov ako na obrázku \ref{pic-vysvetleniePosuvnehoPola}.
+Nasledujúce grafy XXX popisujú výsledky testovania.
+
+(Aby sme neuvádzali dlhý popis pri každom grafe uvedieme ho teraz:
+)
+
+
 \section{Testovanie videí}
 Videá boli natáčané mobilným telefónom Xiaomi Pocophone F1 v rozlíšení 1280x720 pixelov pri 30 dnímkach za sekundu. 
+Vytvorili sme testovací program \texttt{testVVAD}, v ktorom za pomoci knižnice OpenCV načítavame snímky z jednotlivých videí a dávame ich na vstup metódam \texttt{Frame} a \texttt{Frame\-For\-Learning\-Threshold}.
+Snímku z videa získavame každých 33 ms, tak aby obraz šiel plynulo vzhľadom na to, že videá boli natočené so snímkovacou frekvenciou 30.
+Vytvorili sme spolu X dvojíc videí, ku každému testovaciemu videu sme určili časy začatia a ukončenia reči a výsledky sme zobrazili za pomoci grafov. 
+Na nasledujúcom grafe X je zobrazených 200 rozdielov absolútnych hodnôt rozdielov pomerov v dvoch po sebe nasledujúcich spracovaniach snímky metódou \texttt{Frame\-For\-Learning\-Threshold} na trénovacom videu, na ktorom je natočený autor práce.
+Metóda určila prah X.
+
+Použitie prahu metódou \texttt{Frame} je na grafe X.
+
+\section{Zhodnotenie výsledkov testovania}
+Jedným z cieľov práce bolo navrhnúť vlastný HCI komponent a pilotne ho implementovať.
+Tento cieľ sa podarilo splniť.
+Vytvorená C++ knižnica je funkčná a dostatočne rýchla (Na notebooku Asus  Zenbook UX305FA trvalo spracovanie snímky metódou \texttt{Frame} menej ako 30 ms, ) aj na menej výkonných počítačoch.  
+Ak chceme zhodnotiť presnosť a teda použiteľnosť knižnice z testovania uvedeného v predchádzajúcej kapitole vyplýva, že knižnica by mohla byť použiteľná aj v praxi.

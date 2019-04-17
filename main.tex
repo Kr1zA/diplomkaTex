@@ -23,13 +23,21 @@
 
 \def\abstraktPoSlovensky{
 Práca sa zaoberá interakciou človeka s počítačom (HCI - Human computer interface). 
-Jej cieľom je analyzovať existujúce možnosti HCI , navrhnúť vlastné HCI komponenty a pokúsiť sa ich pilotne implementovať.
+Jej cieľom je analyzovať existujúce možnosti HCI, navrhnúť vlastné HCI komponenty a pokúsiť sa ich pilotne implementovať.
 
-Konkrétne nás zaujíma situácia videokonferenčného hovoru, pri ktorej by sme chceli detegovať reč a následne automaticky vypínať a zapínať mikrofón. 
+Konkrétne nás zaujíma situácia videokonferenčného hovoru, pri ktorej by sme chceli detegovať reč (VAD - Voice Activity Detection) a následne automaticky vypínať a zapínať mikrofón. 
+Samotná detekcia reči zo zvuku (AVAD - Acoustic Voice Actividy Detection) často nie je presná, kvôli okolitému šumu.
+Pokúsime sa detegovať reč pomocou obrazu z videokamery (VVAD - Visual Voice Actividy Detection).
+Pomocou knižnice Dlib získavame z obrazu kamery pozíciu tváre a z nej získavame body na tvári spôsobom, ktorý je popísaný v práci \cite{kazemi2014one}. 
+Následne získavame informáciu o reči z pomeru výšky a šírky pier podobne ako to robia v práci \cite{aoki2007voice}.
+Vytvorili sme dynamickú knižnicu v jazyku C++.
+Našu implementáciu sme nakoniec podrobili testovaniu na niekoľkých dvojiciach testovacích a trénovacích videí.
 }
 \def\klucoveSlovaPoSlovensky{videokonferenčný a kolaboračný systém, detekcia reči, detekcia tváre, detekcia bodov na tvári, HCI, riadenie SW produktov}
 
-\def\abstraktPoAnglicky{There will be abstract}
+\def\abstraktPoAnglicky{
+Here will be abstract.
+}
 \def\klucoveSlovaPoAnglicky{voice aktivity detection, face detection, face landmarks detection, HCI, SW product control}
 
 \usepackage{thesis} %Styl zaverecnej prace. Nemazat a nepresuvat, lebo pouziva predchadzajuce premenne dokumentu.
@@ -42,6 +50,6 @@ Konkrétne nás zaujíma situácia videokonferenčného hovoru, pri ktorej by sm
 	\input text/03_zaver.tex
 	%\input text/04_resume.tex
 	\input text/05_literatura.tex
-%	\input text/06_prilohy.tex
+	\input text/06_prilohy.tex
 	%\input text/07_latex.tex
 \end{document}

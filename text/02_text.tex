@@ -233,8 +233,6 @@ Na obr. \ref{pic-oneMsBody.png} sú výsledky algoritmu na testovacej dátovej s
 Pre náš problém sa javí riešenie z článku \cite{kazemi2014one} ako lepšie, keďže už názov článku hovorí o jeho rýchlosti (One millisecond face alignment with an ensemble of regression trees). 
 Ďalšou výhodou tohoto riešenia je to, že je implementované v knižniciach Dlib a OpenCV.
 
-(K tomuto článku budem neskor chcieť spísať matematiku, keďže ho v diplomke najviac používam)
-
 \section{Existujúce implementácie}
 V tejto podkapitole popíšeme existujúce knižnice (implentácie), ktoré sa zaoberajú detekciou tváre a bodov na nej.
 
@@ -571,7 +569,7 @@ Príklad takto určeného prahu je na obr. \ref{pic-kalibraciaUsporiadane}.
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[height=8.65cm]{pics/kalibraciaUsporiadane.png}
+		\includegraphics[width=\textwidth]{pics/kalibraciaUsporiadane.png}
 		\caption{Graf usporiadaných absolútnych hodnôt pomerov, na základe ktorých sa určuje prah. Dvanásta najväčšia hodnota je vrátená ako prah.}
 		\label{pic-kalibraciaUsporiadane}
 	\end{center}
@@ -613,10 +611,81 @@ Dôvodom týchto paúz bolo vyčlenenie úsekov vo videu s rečou a bez reči.
 Testovacie video bolo použité na určenie prahu pomocou metódy \texttt{Frame\-For\-Learning\-Threshold} a prah bol následne použitý v metóde Frame na určenie, či prebieha alebo neprebieha reč v prislúchajúcom testovacom videu. 
 Na jednotlivých testovacích videách určíme časy, kedy prebieha a neprebieha reč a budeme ich porovnávať s výstupom metódy \texttt{Frame}.
 
-Keďže sme sa rozhodli vytvoriť vlastný model pre hľadanie bodov na tvári, je potrebné najprv overiť jeho presnosť, čo urobíme v nasledujúcej kapitole. 
+\section{Testovanie bodov na perách}
+V časti \ref{detekciaBodov} sme popísali použitie bodov na perách, z ktorých sa vypočítava pomer výšky a šírky pier. 
+Brali sme priemery vnútorných a vonkajších bodov na perách. 
+Rozhodli sme sa otestovať vhodnosť týchto bodov. 
+Testovanie prebiehalo na pôvodnom 68 bodovom modeli a použili sme testovacie a trénovacie video, na ktorom je natočený autor práce.
+Upravili sme a 3 krát spustili trénovanie a testovanie na týchto dvoch videách s tým, že raz sme brali vonkajšie body na perách (na obr \ref{pic-vysvetleniePosuvnehoPola} horný bod ako priemer bodov 50 a 52, dolný ako priemer bodov 58 a 56, ľavý bod bol bod 48 a pravý 54), druhý raz vnútorné body (na obr \ref{pic-vysvetleniePosuvnehoPola} horný bod ako priemer bodov 61 a 63, dolný ako priemer bodov 67 a 65, ľavý bod bol bod 60 a pravý 64) a tretí raz priemer vnútorných a vonkajších bodov ako na obrázku \ref{pic-vysvetleniePosuvnehoPola}.
+Na nasledujúcich obrázkoch \ref{pic-vonTreningRiso}, \ref{pic-vonTestRiso}, \ref{pic-vnutriTreningRiso}, \ref{pic-vnutriTestRiso}, \ref{pic-medziTreningRiso}, \ref{pic-medziTestRiso} sa nachádzajú grafy popisujúce výsledky testovania.
 
+(Aby sme neuvádzali dlhý popis pri každom grafe uvedieme ho teraz:
+\begin{itemize}
+\item na vodorovnej osi sa chádza spracovanie snímky metódou \texttt{Frame} alebo \texttt{FrameForLearningThreshold},
+\item na zvislej osi je absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky,
+\item modrou farbou je zobrazená aktuálna absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky,
+\item žltou farbou je zobrazený prah určený metódou \texttt{FrameForLearningThreshold},
+\item zelenou farbou je zobrazená oblasť, kde vo videu prebiehala v skutočnosti reč, 
+\item červenou farbou je zobrazená oblasť, kde vo videu určila metóda \texttt{Frame} reč.
+\end{itemize}
+)
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/vonTreningRiso.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na trénovacom videu s autorom práce.}
+		\label{pic-vonTreningRiso}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/vonTestRiso.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na testovacom videu s autorom práce.}
+		\label{pic-vonTestRiso}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/vnutriTreningRiso.png}
+		\caption{Graf absolútnych hodnôt pomerov na vnútorných bodoch pier na trénovacom videu s autorom práce.}
+		\label{pic-vnutriTreningRiso}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/vnutriTestRiso.png}
+		\caption{Graf absolútnych hodnôt pomerov na vnútorných bodoch pier na testovacom videu s autorom práce.}
+		\label{pic-vnutriTestRiso}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/medziTreningRiso.png}
+		\caption{Graf absolútnych hodnôt pomerov na priemeroch vnútorných a vonkajších bodov pier na trénovacom videu s autorom práce.}
+		\label{pic-medziTreningRiso}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/medziTestRiso.png}
+		\caption{Graf absolútnych hodnôt pomerov na priemeroch vnútorných a vonkajších bodov pier testovacom videu s autorom práce.}
+		\label{pic-medziTestRiso}
+	\end{center}
+\end{figure}
+
+Z uvedených grafov je vidno, ktorá metóda ma akú presnosť. 
+Vnútorné body nie sú vhodné už pri pohľade na trénovacie video, lebo v druhej polovici časti kde prebiehala reč boli absolútne hodnoty rozdielov pomerov veľmi nízke.
+Aj ukážka následnej detekcie nie je presná.
+V prípade vonkajších bodov a priemeru vnútorných a vonkajších bodov vyzerá graf trénovania dobre.
+Graf testovania ale ukazuje, že použitie priemeru vnútorných a vonkajších bodov je vhodnejšie, lebo je presnejšie na detegovanie začiatku reči. 
 
 \section{Testovanie natrénovaného modelu}\label{testovanieModelu}
+Keďže sme sa rozhodli vytvoriť vlastný model pre hľadanie bodov na tvári, je potrebné najprv overiť jeho presnosť.
 Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstránením niektorých bodov:
 \begin{itemize}
 	\item 20 bodový model pier. 
@@ -641,23 +710,11 @@ Trénovanie najpresnejšieho modelu trvalo približne 28 hodín na počítači  
 \item \_nu = 0,1 - regularizačný parameter, 
 \item \_oversampling\_amount = 550 - množstvo prevzorkovaní, teda veľkosť trénovacej množiny sa zväčší náhodne zvolenou transformáciou obrázkov z množiny, 
 \item \_feature\_pool\_size = 750 - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
-\item \_lambda = 0,2 - 
-\item \_num\_test\_splits = 300 - 
+\item \_lambda = 0,2 - na rozhodnutie ako rozdeliť uzly v regresných stromoch sa algoritmus pozerá na náhodné dvojice pixelov a tento parameter určuje ako daleko sú od seba - číslo bližšie pri nule znamená, že pixely sú bližšie pri sebe, bližšie pri jednotke, že dalej od seba, 
+\item \_num\_test\_splits = 300 - počet náhodne generovaných rozdelení pri generovaní stromov na každom uzle,
 \item \_verbose - pravdivostná premenná, ktorá ak platí, tak program bude pri trénovaní vypisovať v akom je stave, inak nebude, 
 \item \_num\_threads = 8 - počet vlákien, ktoré sa používajú pri trénovaní, 
 \end{itemize} 
-
-\section{Testovanie bodov na perách}
-V časti \ref{detekciaBodov} sme popísali použitie bodov na perách, z ktorých sa vypočítava pomer výšky a šírky pier. 
-Brali sme priemery vnútorných a vonkajších bodov na perách. 
-Rozhodli sme sa otestovať vhodnosť týchto bodov. 
-Testovanie prebiehalo na pôvodnom 68 bodovom modeli a použili sme testovacie a trénovacie video, na ktorom je natočený autor práce.
-Upravili sme a 3 krát spustili trénovanie a testovanie na týchto dvoch videách s tým, že raz sme brali vonkajšie body na perách (na obr \ref{pic-vysvetleniePosuvnehoPola} horný bod ako priemer bodov 50 a 52, dolný ako priemer bodov 58 a 56, ľavý bod bol bod 48 a pravý 54), druhý raz vnútorné body (na obr \ref{pic-vysvetleniePosuvnehoPola} horný bod ako priemer bodov 61 a 63, dolný ako priemer bodov 67 a 65, ľavý bod bol bod 60 a pravý 64) a tretí raz priemer vnútorných a vonkajších bodov ako na obrázku \ref{pic-vysvetleniePosuvnehoPola}.
-Nasledujúce grafy XXX popisujú výsledky testovania.
-
-(Aby sme neuvádzali dlhý popis pri každom grafe uvedieme ho teraz:
-)
-
 
 \section{Testovanie videí}
 Videá boli natáčané mobilným telefónom Xiaomi Pocophone F1 v rozlíšení 1280x720 pixelov pri 30 dnímkach za sekundu. 
@@ -672,5 +729,5 @@ Použitie prahu metódou \texttt{Frame} je na grafe X.
 \section{Zhodnotenie výsledkov testovania}
 Jedným z cieľov práce bolo navrhnúť vlastný HCI komponent a pilotne ho implementovať.
 Tento cieľ sa podarilo splniť.
-Vytvorená C++ knižnica je funkčná a dostatočne rýchla (Na notebooku Asus  Zenbook UX305FA trvalo spracovanie snímky metódou \texttt{Frame} menej ako 30 ms, ) aj na menej výkonných počítačoch.  
+Vytvorená C++ knižnica je funkčná a dostatočne rýchla (na notebooku Asus  Zenbook UX305FA trvalo spracovanie snímky metódou \texttt{Frame} menej ako 30 ms) aj na menej výkonných počítačoch.  
 Ak chceme zhodnotiť presnosť a teda použiteľnosť knižnice z testovania uvedeného v predchádzajúcej kapitole vyplýva, že knižnica by mohla byť použiteľná aj v praxi.

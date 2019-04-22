@@ -428,7 +428,7 @@ V hlavičkovom súbore sú definované dve triedy: \texttt{VVAD} a  \texttt{Outp
 Trieda \texttt{VVAD} je hlavnou triedou, ktorá obsahuje verejne metódy:
 \begin{itemize}
 \item \texttt{Frame} - hlavná metóda, ktorej vstupom je video snímka a výstupom je objekt triedy \texttt{Output}.
-\item \texttt{Frame\-For\-Learning\-Threshold}- metóda sa volá na začiatku používania knižnice na určenie prahu. Vstupom metódy je video snímka a výsledným výstupom je prah, pomocou ktorého metóda \texttt{Frame} vyhodnocuje, či vo videosekvencii nastala reč alebo nie.
+\item \texttt{Fra\-me\-For\-Lear\-ning\-Threshold}- metóda sa volá na začiatku používania knižnice na určenie prahu. Vstupom metódy je video snímka a výsledným výstupom je prah, pomocou ktorého metóda \texttt{Frame} vyhodnocuje, či vo videosekvencii nastala reč alebo nie.
 \item \texttt{SaveThreshodToFile} - metóda uloží prah do súboru určeného reťazcom, ktorý dostane na vstup.
 \item \texttt{LoadThresholdFromFile} -  metóda načíta prah zo súboru určeného reťazcom, ktorý dostane na vstup.
 \item \texttt{getThreshold} - vráti hodnotu prahu.
@@ -489,7 +489,7 @@ V príkladových súboroch knižnice sa nachádzajú aj 2 predtrénované modely
 	\end{center}
 \end{figure}
 
-Model so 68 bodmi má približne 95MiB, čo je príliš veľa a model s 5 bodmi zas neobsahuje body na perách.
+Model so 68 bodmi má približne 95 MiB, čo je príliš veľa a model s 5 bodmi zas neobsahuje body na perách.
 Rozhodli sme sa teda vytvoriť vlastný model, ktorý by mal menšiu veľkosť a bol dostatočne presný pre naše potreby.
 Pre trénovanie modelu budeme potrebovať fotografie osôb a k nim súbor s popisom umiestnenia bodov na tvárach (súbory sú štandardne formátu xml, budeme ich preto skrátene nazývať xml súbory).
 V príkladových súboroch sa nachádzajú fotografie aj xml súbory pomocou ktorých je možné trénovať model.
@@ -521,8 +521,8 @@ Z dvadsiatich bodov na perách sa najprv zrátajú pozície bodov z ktorých sa 
 Ukážku popísaných bodov je možné vidieť na obr. \ref{pic-bodyPomeru}.
 Z pravého a ľavého bodu sa vyráta šírka pier a z horného a dolného bodu výška.
 Následne sa vypočíta pomer výšky a šírky a zráta sa absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky. 
-Pomocou metódy \texttt{ShiftAndAddRatioDifference} sa vypočítaná absolútna hodnota uloží do 10 prvkového posuvného poľa.
-Ako toto desať prvkové pole funguje, je vysvetlené na obr. \ref{pic-vysvetleniePosuvnehoPola}.
+Pomocou metódy \texttt{ShiftAndAddRatioDifference} sa vypočítaná absolútna hodnota uloží do 15 prvkového posuvného poľa.
+Ako toto 15 prvkové pole funguje, je vysvetlené na obr. \ref{pic-vysvetleniePosuvnehoPola}.
 
 \begin{figure}[H]
 	\begin{center}
@@ -534,10 +534,10 @@ Ako toto desať prvkové pole funguje, je vysvetlené na obr. \ref{pic-vysvetlen
 
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[height=5cm]{pics/vysvetleniePosuvnehoPola.png}
+		\includegraphics[height=6.5cm]{pics/vysvetleniePosuvnehoPola.png}
 		\caption{Vysvetlenie posuvného poľa.
 		Pri zrátaní abslútnej hodnoty rozdielov pomerov sa posunú hodnoty v poli a nová hodnota sa vloží na prázdne miesto. 
-		Takto si pamätáme posledných desať rozdielov pomerov.}
+		Takto si pamätáme posledných 15 rozdielov pomerov.}
 		\label{pic-vysvetleniePosuvnehoPola}
 	\end{center}
 \end{figure}
@@ -548,21 +548,21 @@ V nej sa skontroluje, či sa v poli nachádza hodnota väčšia ako určený pra
 Ak áno metóda \texttt{Frame} dá na výstup objekt tiedy \texttt{Output} s parametrami pravda, počtom tvári 1 a s pozíciou danej tváre.
 Ak nie metóda \texttt{Frame} dá na výstup objekt tiedy \texttt{Output} s parametrami nepravda, počtom tvári 1 a s pozíciou danej tváre.
 
-To, že sa kontroluje hodnota z posledných 10 snímok znamená, že program kontroluje aktivitu úst pol sekundu do minulosti.
+To, že sa kontroluje hodnota z posledných 15 snímok znamená, že program kontroluje aktivitu úst trištvrte sekundy do minulosti.
 V prípade reči sa vyskytne hodnota väčšia ako prah v poli hneď na prvom mieste a teda program okamžite korektne zareaguje na reč. 
-Za problém by mohlo byť považované to, že hodnota väčšia ako prah sa bude v posuvnom poli vyskytovať ešte pol sekundy.
+Za problém by mohlo byť považované to, že hodnota väčšia ako prah sa bude v posuvnom poli vyskytovať ešte trištvrte sekundy.
 To bude spôsobovať, že program bude vracať zdetegovanú reč, aj keď už reč nebude prebiehať.
 Výsledný efekt je ale opačný. 
 Ak by sa reč vyhodnocovala iba z aktuálnej snímky, respektíve rozdielu dvoch snímok, výstup programu by priveľmi skákal medzi zdetegovanou a nezdetegovanou rečou.
 Naše riešenie teda spôsobuje, že výstup programu je hladší a v prípade reči hneď korektne zareaguje.
 
-\subsection{Metóda \texttt{Frame\-For\-Learning\-Threshold}}
+\subsection{Metóda \texttt{Fra\-me\-For\-Lear\-ning\-Threshold}}
 Pred začatím používanie detekcie reči je potrebné určiť prah, ktorý sa používa v metóde  \texttt{Frame}. 
 Keďže každý človek ma ústa trocha iného tvaru, každý bude potrebovať iný prah.
 Vymysleli sme poloautomatickú metódu určenia prahu, ktorá je účinná a používateľsky prívetivá.
-Pred začatím používania metódy \texttt{Frame} je potrebné posielať približne desať sekúnd snímky metóde  \texttt{Frame\-For\-Learning\-Threshold}, ktorá určí prah. 
+Pred začatím používania metódy \texttt{Frame} je potrebné posielať približne desať sekúnd snímky metóde  \texttt{Fra\-me\-For\-Lear\-ning\-Threshold}, ktorá určí prah. 
 Počas týchto desiatich sekúnd musí používateľ neustále priamo pozerať do kamery a kedykoľvek povedať vetu: \uv{Toto je trénovacie video.} a okrem tejto vety nepohybovať perami.
-Takto počas desiatich sekúnd ukladá metóda  \texttt{Frame\-For\-Learning\-Threshold} vypočítané pomery do poľa 200 posledných pomerov.
+Takto počas desiatich sekúnd ukladá metóda  \texttt{Fra\-me\-For\-Lear\-ning\-Threshold} vypočítané pomery do poľa 200 posledných pomerov.
 Hneď ako sa pole zaplní sa zavolá metóda \texttt{FindThreshold}, ktorá tieto hodnoty usporiada podľa veľkosti a ako nájdený prah vráti dvanástu najväčšiu hodnotu.
 Hodnota dvanásť bola zvolená pri testovaní ako najvhodnejšia.
 Príklad takto určeného prahu je na obr. \ref{pic-kalibraciaUsporiadane}.
@@ -575,19 +575,19 @@ Príklad takto určeného prahu je na obr. \ref{pic-kalibraciaUsporiadane}.
 	\end{center}
 \end{figure}
 
-Keď máme určený prah, metóda \texttt{Frame\-For\-Learning\-Threshold} vráti pravdivostnú hodnotu pravda a tým sa určovanie ukončí a programátor, ktorý bude používať knižnicu VVAD bude vedieť, že prah je nastavený.
-Vo všetkých predchádzajúcich volaniach vracia metóda \texttt{Frame\-For\-Learning\-Threshold} pravdivostnú hodnotu nepravda.
-Detailný popis metódy \texttt{Frame\-For\-Learning\-Threshold} je na obr. \ref{pic-FrameForLearningThreshold}.
+Keď máme určený prah, metóda \texttt{Fra\-me\-For\-Lear\-ning\-Threshold} vráti pravdivostnú hodnotu pravda a tým sa určovanie ukončí a programátor, ktorý bude používať knižnicu VVAD bude vedieť, že prah je nastavený.
+Vo všetkých predchádzajúcich volaniach vracia metóda \texttt{Fra\-me\-For\-Lear\-ning\-Threshold} pravdivostnú hodnotu nepravda.
+Detailný popis metódy \texttt{Fra\-me\-For\-Lear\-ning\-Threshold} je na obr. \ref{pic-FrameForLearningThreshold}.
 
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[height=23cm]{pics/FrameForLearningThreshold.jpg}
-		\caption{Graf priebehu metódy \texttt{Frame\-For\-Learning\-Threshold}. Vo vrcholoch sú akcie ktoré sa vykonávajú, šípky znázorňujú výstupy z akcií.}
+		\caption{Graf priebehu metódy \texttt{Fra\-me\-For\-Lear\-ning\-Threshold}. Vo vrcholoch sú akcie ktoré sa vykonávajú, šípky znázorňujú výstupy z akcií.}
 		\label{pic-FrameForLearningThreshold}
 	\end{center}
 \end{figure}
 
-Rovnako ako v metóde \texttt{Frame} je možné volať metódu \texttt{Frame\-For\-Learning\-Threshold} ľubovoľný počet krát za sekundu, opäť však minimálne dvadsať krát a metóda spracúvava rovnakým spôsobom každú snímku, ktorá prišla po 50 ms od predchádzajúcej spracovanej snímky.
+Rovnako ako v metóde \texttt{Frame} je možné volať metódu \texttt{Fra\-me\-For\-Lear\-ning\-Threshold} ľubovoľný počet krát za sekundu, opäť však minimálne dvadsať krát a metóda spracúvava rovnakým spôsobom každú snímku, ktorá prišla po 50 ms od predchádzajúcej spracovanej snímky.
 
 \section{Implementácia AVAD}
 S použitím knižnice SFML \cite{SFML} sa nám čiastočne podarilo implementovať algoritmus z práce  \cite{moattar2009simple}. 
@@ -598,20 +598,20 @@ Implementovanú knižnicu VVAD sme nakoniec podrobili testovaniu.
 Museli sme navrhnúť metodiku testovania a spôsob vyhodnocovania. 
 Natočili sme niekoľko tré\-no\-va\-cích a testovacích videí a na nich sme vyhodnotili funkčnosť implementácie. 
 
-\section{Metodika testovania}
-Knižnica VVAD sa skladá z dvoch hlavných metód: \texttt{Frame} a \texttt{Frame\-For\-Learning\-Threshold}. 
-\texttt{Frame\-For\-Learning\-Threshold} určí prah, podľa ktorého následne \texttt{Frame} určuje, či prebieha reč alebo nie.
+\section{Metodika testovania}\label{metodika}
+Knižnica VVAD sa skladá z dvoch hlavných metód: \texttt{Frame} a \texttt{Fra\-me\-For\-Lear\-ning\-Threshold}. 
+\texttt{Fra\-me\-For\-Lear\-ning\-Threshold} určí prah, podľa ktorého následne \texttt{Frame} určuje, či prebieha reč alebo nie.
 Na to, aby sme otestovali funkčnosť týchto metód natočili sme dvojice sekvencií trénovacích a testovacích videí. 
-Poprosili sme niekoľko kolegov o nahranie týchto videí, kde v trénovacom videu, ktoré malo dĺžku viac ako 10 sekúnd, mali povedať vetu \uv{Toto je trénovacie video.} a okrem toho mať ústa zatvorené a nehýbať nimi.
+Poprosili sme niekoľko kolegov a známych  o nahranie týchto videí, kde v trénovacom videu, ktoré malo dĺžku viac ako 10 sekúnd, mali povedať vetu \uv{Toto je trénovacie video.} a okrem toho mať ústa zatvorené a nehýbať nimi.
 V testovacom videu, ktoré malo ľubovoľnú dĺžku, mali povedať dve vety. Prvá veta bola \uv{Poďme vyskúšať, či je dobrý theshold.}, kde za čiarkou mali urobiť v reči väčšiu pauzu. 
 Druhá veta bola \uv{Toto bolo testovacie video.}. 
 Aj medzi týmito dvoma vetami mali spraviť väčšiu pauzu. 
 Dôvodom týchto paúz bolo vyčlenenie úsekov vo videu s rečou a bez reči.
 
-Testovacie video bolo použité na určenie prahu pomocou metódy \texttt{Frame\-For\-Learning\-Threshold} a prah bol následne použitý v metóde Frame na určenie, či prebieha alebo neprebieha reč v prislúchajúcom testovacom videu. 
+Testovacie video bolo použité na určenie prahu pomocou metódy \texttt{Fra\-me\-For\-Lear\-ning\-Threshold} a prah bol následne použitý v metóde Frame na určenie, či prebieha alebo neprebieha reč v prislúchajúcom testovacom videu. 
 Na jednotlivých testovacích videách určíme časy, kedy prebieha a neprebieha reč a budeme ich porovnávať s výstupom metódy \texttt{Frame}.
 
-\section{Testovanie bodov na perách}
+\section{Testovanie bodov na perách}\label{testBodyNaPerach}
 V časti \ref{detekciaBodov} sme popísali použitie bodov na perách, z ktorých sa vypočítava pomer výšky a šírky pier. 
 Brali sme priemery vnútorných a vonkajších bodov na perách. 
 Rozhodli sme sa otestovať vhodnosť týchto bodov. 
@@ -621,14 +621,13 @@ Na nasledujúcich obrázkoch \ref{pic-vonTreningRiso}, \ref{pic-vonTestRiso}, \r
 
 (Aby sme neuvádzali dlhý popis pri každom grafe uvedieme ho teraz:
 \begin{itemize}
-\item na vodorovnej osi sa chádza spracovanie snímky metódou \texttt{Frame} alebo \texttt{FrameForLearningThreshold},
+\item na vodorovnej osi sa chádza spracovanie snímky metódou \texttt{Frame} alebo \texttt{Fra\-me\-For\-Lear\-ning\-Threshold},
 \item na zvislej osi je absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky,
 \item modrou farbou je zobrazená aktuálna absolútna hodnota rozdielu aktuálneho pomeru a pomeru z predchádzajúcej snímky,
-\item žltou farbou je zobrazený prah určený metódou \texttt{FrameForLearningThreshold},
+\item žltou farbou je zobrazený prah určený metódou \texttt{Fra\-me\-For\-Lear\-ning\-Threshold},
 \item zelenou farbou je zobrazená oblasť, kde vo videu prebiehala v skutočnosti reč, 
-\item červenou farbou je zobrazená oblasť, kde vo videu určila metóda \texttt{Frame} reč.
+\item červenou farbou je zobrazená oblasť, kde vo videu určila metóda \texttt{Frame} reč.)
 \end{itemize}
-)
 
 \begin{figure}[H]
 	\begin{center}
@@ -692,42 +691,120 @@ Vytvorili sme 2 nové modely, úpravou xml súborov pre 68 bodový model, odstr�
 	Ponechali sme len body na perách. 
 	Už prvé pokusy natrénovať takýto model ukázali, že nie je vhodný.
 	Dosť často sa stávalo, že model našiel pery v oblasti brady alebo medri bradou a perami.
-	Dôvodom je podobnosť týchto oblastí s perami. Ukážka chybovosti modelu je na obr. X.
+	Dôvodom je podobnosť týchto oblastí s perami. 
+	Ukážka chybovosti modelu je na obr. \ref{pic-nepresnostModeluLenUsta}.
+	
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=5cm]{pics/nepresnostModeluLenUsta.png}
+		\caption{Ukážka nepresnosti 20 bodového modelu.}
+		\label{pic-nepresnostModeluLenUsta}
+	\end{center}
+\end{figure}
+
 	\item 27 bodový model pier.
-	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uši, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
+	Kvôli zvýšeniu presnosti modelu sme okrem 20 bodov na perách nechali body na spodnej časti uší, bod na brade, nose, medzi očami a vonkajšie krajné body očí.
 	Skúšali sme rôzne parametre trénovania. 
-	Vačšina natrénovaných modelov bola stále nepresná, ústa boli užšie ako mali byť a podobne.
+	Väčšina natrénovaných modelov bola stále nepresná, ústa boli užšie ako mali byť a podobne.
 	Nakoniec sa podarilo nájsť parametre, s ktorými vyzeral byť natrénovaný model dostatočne presný.
-	Ukážka natrénovaného modelu je na obr. X.
-%	Nasledovné testovanie ale ukázalo, že vhodnejšie bude použiť pôvodný model z knižnice Dlib.
+	Ukážka natrénovaného modelu je na obr. \ref{pic-nepresnostModeluLenUsta}.
+	
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[height=5cm]{pics/ukazka27modelu.png}
+		\caption{Ukážka natrénovaného 27 bodového modelu.}
+		\label{pic-nepresnostModeluLenUsta}
+	\end{center}
+\end{figure}
+
 \end{itemize}
 
-Trénovanie najpresnejšieho modelu trvalo približne 28 hodín na počítači  HP Z240. Uvedieme použité parametre trénovania aj s popisom:
+Trénovanie najpresnejšieho modelu trvalo približne 28 hodín na počítači  HP Z240 a výsledný model má veľkosť približne 37 MiB. 
+Uvedieme použité parametre trénovania aj s popisom:
  \begin{itemize}
 \item \_cascade\_depth = 12 - hĺbka kaskády, 
-\item \_tree\_depth = 3 - hĺbka stromu, 
-\item \_num\_trees\_per\_cascade\_level = 600 - hĺbka stromov v úrovni kaskády, 
+\item \_num\_trees\_per\_cascade\_level = 600 - počet stromov v úrovni kaskády, 
+\item \_tree\_depth = 4 - hĺbka stromu, 
 \item \_nu = 0,1 - regularizačný parameter, 
 \item \_oversampling\_amount = 550 - množstvo prevzorkovaní, teda veľkosť trénovacej množiny sa zväčší náhodne zvolenou transformáciou obrázkov z množiny, 
 \item \_feature\_pool\_size = 750 - počet náhodne vybraných pixelov z obrázka v každej úrovni kaskády, 
 \item \_lambda = 0,2 - na rozhodnutie ako rozdeliť uzly v regresných stromoch sa algoritmus pozerá na náhodné dvojice pixelov a tento parameter určuje ako daleko sú od seba - číslo bližšie pri nule znamená, že pixely sú bližšie pri sebe, bližšie pri jednotke, že dalej od seba, 
 \item \_num\_test\_splits = 300 - počet náhodne generovaných rozdelení pri generovaní stromov na každom uzle,
-\item \_verbose - pravdivostná premenná, ktorá ak platí, tak program bude pri trénovaní vypisovať v akom je stave, inak nebude, 
 \item \_num\_threads = 8 - počet vlákien, ktoré sa používajú pri trénovaní, 
 \end{itemize} 
+Veľkosť výsledného modelu záleží najmä na hĺbke kaskády, počte stromov v úrovni kaskády a hĺbke stromov. 
+
+Natrénovaný model sme testovali rovnakým spôsobom ako v časti \ref{testBodyNaPerach} na troch rôznych bodoch na perách na trénovacom a testovacom videu s autorom práce.
+Z tohoto testovania vyplynulo, že ani tento model nie je vhodný. 
+Nasledujúce obr. \ref{pic-grafNovehoModeluVonTrening} a \ref{pic-grafNovehoModeluVonTesting} ukazujú grafy najlepšieho výsledku, kedy sme zobrali vonkajšie body pier.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/grafNovehoModeluVonTrening.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na testovacom videu s autorom práce, pri použití 27 bodového natrénovaného modelu.}
+		\label{pic-grafNovehoModeluVonTrening}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/grafNovehoModeluVonTesting.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na testovacom videu s autorom práce, pri použití 27 bodového natrénovaného modelu.}
+		\label{pic-grafNovehoModeluVonTesting}
+	\end{center}
+\end{figure}
 
 \section{Testovanie videí}
-Videá boli natáčané mobilným telefónom Xiaomi Pocophone F1 v rozlíšení 1280x720 pixelov pri 30 dnímkach za sekundu. 
-Vytvorili sme testovací program \texttt{testVVAD}, v ktorom za pomoci knižnice OpenCV načítavame snímky z jednotlivých videí a dávame ich na vstup metódam \texttt{Frame} a \texttt{Frame\-For\-Learning\-Threshold}.
+Videá boli natáčané mobilným telefónom Xiaomi Pocophone F1 v rozlíšení 1280x720 pixlov pri 30 snímkach za sekundu. 
+Vytvorili sme testovací program \texttt{testVVAD}, v ktorom za pomoci knižnice OpenCV načítavame snímky z jednotlivých videí a dávame ich na vstup metódam \texttt{Frame} a \texttt{Fra\-me\-For\-Lear\-ning\-Threshold}.
+Na nájdenie bodov na tvári sme použili pôvodný model z knižnice Dlib.
 Snímku z videa získavame každých 33 ms, tak aby obraz šiel plynulo vzhľadom na to, že videá boli natočené so snímkovacou frekvenciou 30.
-Vytvorili sme spolu X dvojíc videí, ku každému testovaciemu videu sme určili časy začatia a ukončenia reči a výsledky sme zobrazili za pomoci grafov. 
-Na nasledujúcom grafe X je zobrazených 200 rozdielov absolútnych hodnôt rozdielov pomerov v dvoch po sebe nasledujúcich spracovaniach snímky metódou \texttt{Frame\-For\-Learning\-Threshold} na trénovacom videu, na ktorom je natočený autor práce.
-Metóda určila prah X.
+Vytvorili sme spolu 9 dvojíc videí (vrátane videa s autorom práce), kde 2 ženy a 7 mužov nahrali videá tak, ako sú popísané v časti \ref{metodika}.
+Ku každému videu sme určili časy začatia a ukončenia reči a výsledky sme zobrazili za pomoci grafov. 
+Ako príklad uvedieme na obr. \ref{pic-dadaTrening}, \ref{pic-dadaTest}, \ref{pic-kajtanTrening}, \ref{pic-kajtanTest}  grafy videí 2 osob, jednej ženy a jedného muža aj s popisom.
 
-Použitie prahu metódou \texttt{Frame} je na grafe X.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/pataTrening.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na testovacom videu so ženou.}
+		\label{pic-dadaTrening}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/pataTest.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na testovacom videu so ženou.}
+		\label{pic-dadaTest}
+	\end{center}
+\end{figure}
+Pri tejto osobe hľadanie bodov na tvári takmer vôbec nefungovalo. 
+Nájdené body boli väčšinou úplne mimo a vôbec neodpovedali skutočnosti.
+Z tohoto dôvodu nebol správne určený prah a teda ani následná detekcia reči nebola úspešná.
+Dôvod nesprávnej detekcie sa nám nepodarilo určiť.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/kajtanTrening.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na testovacom videu s mužom.}
+		\label{pic-kajtanTrening}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{pics/kajtanTest.png}
+		\caption{Graf absolútnych hodnôt pomerov na vonkajších bodoch pier na testovacom videu s mužom.}
+		\label{pic-kajtanTest}
+	\end{center}
+\end{figure}
+V prípade osoby, ktorej grafy sú zobrazené vyššie je pekne vidieť, že určovanie prahu bolo úspešnejšie.
+Následná detekcia reči prehlasuje za reč veľa oblastí, ktoré rečou v skutočnosti nie sú.
+Dôvodom bude to, že aj pri trénovacom a aj pri testovacom videu sa osoba zhlboka nadýchla pred každým začatím reči, čo je vidieť na vysokých hodnotách pred oblasťou reči na grafoch.
 
 \section{Zhodnotenie výsledkov testovania}
 Jedným z cieľov práce bolo navrhnúť vlastný HCI komponent a pilotne ho implementovať.
 Tento cieľ sa podarilo splniť.
-Vytvorená C++ knižnica je funkčná a dostatočne rýchla (na notebooku Asus  Zenbook UX305FA trvalo spracovanie snímky metódou \texttt{Frame} menej ako 30 ms) aj na menej výkonných počítačoch.  
+Vytvorená C++ knižnica je funkčná a dostatočne rýchla aj na menej výkonných počítačoch (na notebooku Asus  Zenbook UX305FA trvalo spracovanie snímky metódou \texttt{Frame} menej ako 30 ms). 
 Ak chceme zhodnotiť presnosť a teda použiteľnosť knižnice z testovania uvedeného v predchádzajúcej kapitole vyplýva, že knižnica by mohla byť použiteľná aj v praxi.
+Väčšina vytvorených testovacích videí síce ukazuje, že 
